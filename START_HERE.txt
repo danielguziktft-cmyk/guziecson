@@ -1,0 +1,48 @@
+Z GUZIKSONA DO GUZIECSONA W 90 DNI — GOTOWA PACZKA
+
+PLIKI:
+1) index.html — publiczna strona projektu
+2) control.html — Twój panel podczas streama
+3) overlay.html — overlay OBS
+4) end.html — ekran końca streama z finalnym biegiem i jutrzejszym twarogiem
+
+OBS:
+- Browser Source -> Local file -> overlay.html
+- sugerowany rozmiar 500x250
+- bieg NIE jest pokazywany w trakcie streama
+- po ostatniej grze możesz przełączyć scenę na end.html
+
+WORKFLOW STREAMA:
+1. Otwierasz control.html.
+2. Po każdej grze klikasz miejsce 1–8.
+3. Panel sam liczy REP = miejsce × mnożnik aktualnego ćwiczenia.
+4. Robisz te powtórzenia od razu między grami. Nie ma limitu.
+5. Redeemy przysiadów dodajesz przyciskami. Tu działa limit 100.
+6. W polu donejtów wpisujesz łączną kwotę.
+7. Na końcu klikasz WYLICZ FINAŁ STREAMA.
+8. end.html pokazuje dopiero wtedy dystans biegu, maksymalnie 3 km.
+9. Twaróg wynikający z AVG jesz na początku NASTĘPNEGO streama.
+10. Klikasz ZAPISZ STREAM + NASTĘPNY DZIEŃ.
+
+AVG -> TWARÓG:
+3.8–4.4 = sos WKDZIK
+4.5–4.7 = neutral
+4.8+ = kara
+
+AVG -> BIEG:
+<=4.4 = 0 m
+4.5–4.7 = 500 m
+4.8–5.2 = 1000 m
+5.3+ = 1500 m
+Donejty: 2 PLN = 100 m
+AVG + donejty: MAX 3000 m
+
+PLAN:
+D1 pompki ×4
+D2 wiosłowanie hantlami ×3
+D3 OHP hantlami siedząc ×3
+D4 podciąganie na kółkach ×3
+i od nowa.
+
+WAŻNE TECHNICZNIE:
+Ta paczka działa od razu lokalnie w jednej przeglądarce. Jeżeli publiczna strona ma być hostowana online i ma aktualizować się na żywo u widzów oraz w OBS z osobnego panelu, potrzebna jest baza online (np. Firebase) i jej konfiguracja projektu. Bez danych dostępowych/configu z Twojego projektu Firebase nie da się bezpiecznie stworzyć działającego wspólnego backendu za Ciebie. Frontend i cała logika eventu są gotowe.

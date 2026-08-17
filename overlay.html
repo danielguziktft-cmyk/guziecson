@@ -1,0 +1,4 @@
+<!doctype html><html lang=pl><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel=stylesheet href=style.css></head><body class=obs><script src=config.js></script><script src=app.js></script><div class=overlay><div class=top>Z GUZIKSONA DO GUZIECSONA • <span id=d></span>/90</div><div class=line><span id=ex></span><span id=mul></span></div><div class=line><span>AVG <b id=a></b></span><span>PRZYSIADY <b id=s></b>/100</span></div><div class=rep><span id=r></span> REP</div><div class=alert id=f></div></div><script>
+function render(){let av=G90.avg(),e=G90.exercise();d.textContent=G90.state.day;ex.textContent=e.name;mul.textContent="×"+e.multiplier;a.textContent=av===null?"—":av.toFixed(2);s.textContent=G90.state.squats||0;r.textContent=G90.reps();f.textContent=G90.state.yesterdayFood?"DZISIAJ: "+G90.state.yesterdayFood:"";}
+render();setInterval(render,500);addEventListener("g90update",render);
+</script></body></html>
