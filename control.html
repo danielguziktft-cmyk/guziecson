@@ -5,6 +5,15 @@
 <section class=card><h2>4. Dane projektu</h2><div class=formgrid><label>Dzień<input id=day type=number min=1 max=90></label><label>Waga kg<input id=weight type=number step=.1></label><label>Notatka<textarea id=notes></textarea></label></div><button onclick="saveMeta()">ZAPISZ DANE</button></section>
 <section class=card><h2>5. Końcówka streama</h2><p>Po ostatniej grze kliknij podgląd. Wtedy system pokazuje bieg do wykonania pod koniec streama:</p><div id=summary class=big>—</div><button onclick="finishPreview()">WYLICZ BIEG NA KONIEC STREAMA</button><button class=danger onclick="if(confirm('Zapisać stream i przejść do kolejnego dnia?')) G90.nextDay()">ZAPISZ STREAM + NASTĘPNY DZIEŃ</button></section>
 <section class=card><h2>OBS</h2><p>Dodaj <code>overlay.html</code> jako Browser Source. Overlay pokazuje dzień, ćwiczenie, AVG, REP i przysiady. <b>Nie pokazuje biegu w trakcie streama.</b></p></section>
+
+<section class=card>
+<h2>⚠️ Reset</h2>
+<p><b>Reset dzisiejszego streama</b> usuwa tylko dzisiejsze gry, AVG, REP, przysiady i donejty. Nie rusza dnia, wagi ani historii projektu.</p>
+<button class=secondary onclick="if(confirm('Zresetować tylko dzisiejszy stream?')){G90.resetStream();summary.textContent='—';}">RESET DZISIEJSZEGO STREAMA</button>
+<hr style="border:0;border-top:1px solid #292a33;margin:24px 0">
+<p><b>Reset całego projektu</b> usuwa wszystko i wraca do DAY 1 / 90.</p>
+<button class=danger onclick="if(confirm('UWAGA: usunąć CAŁY progress projektu i wrócić do DAY 1?')){G90.resetProject();summary.textContent='—';location.reload();}">RESET CAŁEGO PROJEKTU</button>
+</section>
 </main><script>
 for(let i=1;i<=8;i++){let b=document.createElement("button");b.textContent=i;b.onclick=()=>G90.addGame(i);gb.appendChild(b)}
 function render(){let st=G90.state,e=G90.exercise(),a=G90.avg();currentExercise.innerHTML=`<b>${e.label} — ${e.name}</b> • mnożnik ×${e.multiplier}`;reps.textContent=G90.reps();avg.textContent=a===null?"—":a.toFixed(2);games.textContent=st.games.length;squats.textContent=(st.squats||0)+" / 100";don.value=st.donationsPLN||0;day.value=st.day;weight.value=st.weight||"";notes.value=st.notes||""}

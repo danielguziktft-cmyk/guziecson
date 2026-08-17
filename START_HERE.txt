@@ -31,10 +31,11 @@ AVG -> TWARÓG:
 4.8+ = kara
 
 AVG -> BIEG:
-<=4.4 = 0 m
-4.5–4.7 = 500 m
-4.8–5.2 = 1000 m
-5.3+ = 1500 m
+<=4.2 = 0 m
+4.3–4.4 = 300 m
+4.5–4.6 = 600 m
+4.7–4.8 = 900 m
+4.9+ = 1200 m
 Donejty: 2 PLN = 100 m
 AVG + donejty: MAX 3000 m
 
@@ -47,3 +48,7 @@ i od nowa.
 
 WAŻNE TECHNICZNIE:
 Ta paczka działa od razu lokalnie w jednej przeglądarce. Jeżeli publiczna strona ma być hostowana online i ma aktualizować się na żywo u widzów oraz w OBS z osobnego panelu, potrzebna jest baza online (np. Firebase) i jej konfiguracja projektu. Bez danych dostępowych/configu z Twojego projektu Firebase nie da się bezpiecznie stworzyć działającego wspólnego backendu za Ciebie. Frontend i cała logika eventu są gotowe.
+
+RESETY:
+- RESET DZISIEJSZEGO STREAMA: zeruje tylko gry, AVG, REP, przysiady i donejty z bieżącego streama.
+- RESET CAŁEGO PROJEKTU: usuwa cały progress i wraca do DAY 1.

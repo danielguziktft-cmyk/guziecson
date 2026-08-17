@@ -10,7 +10,7 @@ function exercise(){return CFG.exercises[(Math.max(1,Number(state.day))-1)%CFG.e
 function avg(){return state.games.length?state.games.reduce((a,b)=>a+Number(b.place),0)/state.games.length:null}
 function foodFor(a){if(a===null)return null;if(a>=3.8&&a<=4.4)return "SOS WKDZIK";if(a>=4.5&&a<=4.7)return "NEUTRAL";if(a>=4.8)return "KARA";return "SOS WKDZIK";}
 function reps(){let m=exercise().multiplier;return state.games.reduce((s,g)=>s+Number(g.place)*m,0)}
-function avgRunMeters(a){if(a===null)return 0;if(a<=4.4)return 0;if(a<=4.7)return 500;if(a<=5.2)return 1000;return 1500}
+function avgRunMeters(a){if(a===null)return 0;if(a<=4.2)return 0;if(a<=4.4)return 300;if(a<=4.6)return 600;if(a<=4.8)return 900;return 1200}
 function donationMeters(){return Math.floor((Number(state.donationsPLN)||0)/2)*CFG.donationMetersPer2PLN}
 function finalRun(){return Math.min(CFG.runCapMeters,avgRunMeters(avg())+donationMeters())}
 function save(){localStorage.setItem(KEY,JSON.stringify(state)); window.dispatchEvent(new Event("g90update"))}
@@ -25,5 +25,6 @@ window.G90={get state(){return state},save,avg,foodFor,reps,exercise,avgRunMeter
  addSquats(n){state.squats=Math.min(CFG.squatCap,Number(state.squats||0)+n);save()},
  addDonation(pln){state.donationsPLN=Number(state.donationsPLN||0)+Number(pln);save()},
  resetStream(){state.games=[];state.squats=0;state.donationsPLN=0;save()},
+ resetProject(){localStorage.removeItem(KEY);state=JSON.parse(JSON.stringify(defaults));save()},
  set(k,v){state[k]=v;save()}
 };
