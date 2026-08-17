@@ -1,16 +1,17 @@
 Z GUZIKSONA DO GUZIECSONA W 90 DNI — GOTOWA PACZKA
 
 PLIKI:
-1) index.html — publiczna strona projektu
-2) control.html — Twój panel podczas streama
-3) overlay.html — overlay OBS
-4) end.html — ekran końca streama z finalnym biegiem i jutrzejszym twarogiem
+1) start.html — ekran startowy projektu do OBS
+2) index.html — publiczna strona projektu
+3) control.html — Twój panel podczas streama
+4) overlay.html — overlay OBS
+5) end.html — ekran końca streama z finalnym biegiem i jutrzejszym twarogiem
 
 OBS:
 - Browser Source -> Local file -> overlay.html
 - sugerowany rozmiar 500x250
-- bieg NIE jest pokazywany w trakcie streama
-- po ostatniej grze możesz przełączyć scenę na end.html
+- bieg NIE jest trackowany w trakcie streama
+- po ostatniej grze możesz przełączyć scenę na end.html i zrobić bieg pod koniec streama
 
 WORKFLOW STREAMA:
 1. Otwierasz control.html.
@@ -19,8 +20,8 @@ WORKFLOW STREAMA:
 4. Robisz te powtórzenia od razu między grami. Nie ma limitu.
 5. Redeemy przysiadów dodajesz przyciskami. Tu działa limit 100.
 6. W polu donejtów wpisujesz łączną kwotę.
-7. Na końcu klikasz WYLICZ FINAŁ STREAMA.
-8. end.html pokazuje dopiero wtedy dystans biegu, maksymalnie 3 km.
+7. Po ostatniej grze klikasz WYLICZ BIEG NA KONIEC STREAMA.
+8. end.html pokazuje wtedy dystans biegu, który robisz pod koniec streama, maksymalnie 3 km.
 9. Twaróg wynikający z AVG jesz na początku NASTĘPNEGO streama.
 10. Klikasz ZAPISZ STREAM + NASTĘPNY DZIEŃ.
 
