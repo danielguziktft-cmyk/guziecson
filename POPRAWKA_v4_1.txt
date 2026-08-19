@@ -1,0 +1,19 @@
+POPRAWKA v4.1
+
+Naprawiono problem z polami formularza w control.html:
+- donejty
+- dzień
+- waga
+- notatka
+
+Wcześniej panel wykonywał render co 1 sekundę i nadpisywał wpisywaną wartość starą wartością z Firebase.
+
+Teraz:
+- pola nie są nadpisywane, gdy aktualnie je edytujesz,
+- usunięto zbędny polling co 1 sekundę w panelu,
+- panel aktualizuje się po zdarzeniach Firebase,
+- dzień/waga/notatka zapisują się jednym zapisem do Firebase,
+- donejty również zapisują się stabilnie.
+
+Podmień na GitHubie przede wszystkim control.html.
+Pozostałe pliki mogą zostać z v4.
