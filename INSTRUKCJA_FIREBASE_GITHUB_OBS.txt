@@ -1,0 +1,78 @@
+GUZIECSON 90 — INSTALACJA FIREBASE + GITHUB + OBS
+
+1. FIREBASE RULES
+Firebase Console -> Realtime Database -> Rules
+Wklej zawartość pliku firebase-rules-test.json i kliknij Publish.
+
+UWAGA: to są reguły TESTOWE. Pozwalają każdemu czytać i zapisywać.
+Najpierw sprawdzamy działanie. Potem zabezpieczymy WRITE logowaniem.
+
+2. GITHUB
+Usuń/podmień stare pliki w repo i wrzuć:
+index.html
+control.html
+overlay.html
+end.html
+start.html
+app.js
+config.js
+style.css
+firebase-rules-test.json
+
+Wszystko ma być w głównym katalogu repo.
+
+3. GITHUB PAGES
+Settings -> Pages
+Source: Deploy from a branch
+Branch: main
+Folder: / (root)
+
+4. TEST
+Otwórz w dwóch kartach:
+.../control.html
+.../overlay.html
+
+Kliknij miejsce 1-8 w control.html.
+Overlay powinien zmienić AVG i REP automatycznie.
+
+Potem otwórz index.html na telefonie. Powinien widzieć te same dane.
+
+5. OBS
+Źródła -> + -> Przeglądarka
+
+Overlay:
+https://TWOJ_LOGIN.github.io/TWOJE_REPO/overlay.html
+
+Rozmiar:
+500 x 250
+
+Ekran startowy:
+.../start.html
+
+Ekran końcówki:
+.../end.html
+
+6. WORKFLOW
+- Po każdej grze klikasz miejsce 1–8.
+- REP liczą się automatycznie.
+- Robisz je od razu między grami.
+- Brak limitu REP z planu.
+- Przysiady z punktów: max 100.
+- Wpisujesz łączną kwotę donejtów.
+- Po ostatniej grze klikasz WYLICZ BIEG NA KONIEC STREAMA.
+- Bieg robisz jeszcze na streamie.
+- Twaróg z AVG jesz na początku następnego streama.
+- ZAPISZ STREAM + NASTĘPNY DZIEŃ zapisuje historię.
+
+BIEG:
+AVG <=4.2 = 0 m
+4.3–4.4 = 300 m
+4.5–4.6 = 600 m
+4.7–4.8 = 900 m
+4.9+ = 1200 m
+Donejty: 2 zł = +100 m
+Łącznie max 3000 m.
+
+RESET:
+- RESET DZISIEJSZEGO STREAMA = tylko bieżące gry/AVG/REP/przysiady/donejty.
+- RESET CAŁEGO PROJEKTU = powrót do DAY 1 + usunięcie historii.
