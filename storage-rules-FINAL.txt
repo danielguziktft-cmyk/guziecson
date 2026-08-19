@@ -1,0 +1,13 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /progress/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null
+                   && request.auth.uid == "WKLEJ_TUTAJ_SWOJ_UID"
+                   && request.resource.size < 8 * 1024 * 1024
+                   && request.resource.contentType.matches("image/.*");
+    }
+  }
+}

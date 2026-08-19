@@ -1,3 +1,4 @@
+
 window.G90_CONFIG = {
   projectName: "Z Guziksona do Guziecsona w 90 DNI",
   maxDays: 90,

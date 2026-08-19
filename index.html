@@ -1,6 +1,28 @@
 <!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Guziecson 90 DNI</title><link rel="stylesheet" href="style.css"></head><body><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script src="config.js"></script><script src="app.js"></script>
-<header class="hero"><div class="wrap"><div class="eyebrow">GUZIKSON • 90-DNIOWY PROJEKT</div><h1>Z Guziksona do <em>Guziecsona</em><br>w 90 DNI</h1><p class="lead">Każda gra w TFT ma konsekwencje. Miejsce zamienia się w powtórzenia robione między grami. AVG ustala twaróg na początek następnego streama oraz dystans biegu na końcówkę streama.</p><div class="stats"><div class="stat"><b id="d">1</b><small>DZIEŃ / 90</small></div><div class="stat"><b id="a">—</b><small>AVG</small></div><div class="stat"><b id="r">0</b><small>REP</small></div><div class="stat"><b id="s">0/100</b><small>PRZYSIADY</small></div><div class="stat"><b id="w">—</b><small>WAGA KG</small></div></div></div></header>
-<main class="wrap"><section class="grid"><div class="card"><h2>🎮 Dzisiejszy trening</h2><div class="big" id="ex"></div><p>Mnożnik: <b id="mul"></b>. Bez limitu REP z planu.</p></div><div class="card"><h2>🥣 Twaróg</h2><div class="big" id="food">—</div><p>3.8–4.4 → sos WKDZIK • 4.5–4.7 → neutral • 4.8+ → kara</p></div></section><section class="card"><h2>🏃 Bieg pod koniec streama</h2><p>≤4.2 → 0 m • 4.3–4.4 → 300 m • 4.5–4.6 → 600 m • 4.7–4.8 → 900 m • 4.9+ → 1200 m. Donejty: 2 zł = +100 m. Łącznie max 3 km.</p></section><section class="card"><h2>📜 Ostatnie streamy</h2><table class="table"><thead><tr><th>Dzień</th><th>AVG</th><th>Ćwiczenie</th><th>REP</th><th>Bieg</th><th>Twaróg</th></tr></thead><tbody id="hist"></tbody></table></section></main>
-<script>function render(){let st=G90.state,av=G90.avg(),e=G90.exercise();d.textContent=st.day;a.textContent=av===null?"—":av.toFixed(2);r.textContent=G90.reps();s.textContent=(st.squats||0)+"/100";w.textContent=st.weight||"—";ex.textContent=e.label+" — "+e.name;mul.textContent="×"+e.multiplier;food.textContent=st.yesterdayFood||"START PROJEKTU";hist.innerHTML=(st.history||[]).slice(0,12).map(x=>`<tr><td>${x.day}</td><td>${x.avg.toFixed(2)}</td><td>${x.exercise}</td><td>${x.reps}</td><td>${(x.runMeters/1000).toFixed(1)} km</td><td>${x.food}</td></tr>`).join("")||'<tr><td colspan="6">Projekt jeszcze nie wystartował.</td></tr>';}addEventListener("g90update",render);setInterval(render,1000);</script></body></html>
+<header class="hero"><div class="wrap"><div class="eyebrow">GUZIKSON • 90-DNIOWY PROJEKT</div><h1>Z Guziksona do <em>Guziecsona</em><br>w 90 DNI</h1><p class="lead">Każda gra w TFT ma konsekwencje. Miejsce zamienia się w powtórzenia między grami, AVG ustala twaróg na następny stream i bieg na końcówkę streama.</p><div class="stats"><div class="stat"><b id="d">1</b><small>DZIEŃ / 90</small></div><div class="stat"><b id="a">—</b><small>AVG</small></div><div class="stat"><b id="r">0</b><small>REP</small></div><div class="stat"><b id="s">0/100</b><small>PRZYSIADY</small></div><div class="stat"><b id="w">—</b><small>WAGA KG</small></div></div></div></header>
+<main class="wrap">
+<section class="grid"><div class="card"><h2>🎮 Dzisiejszy trening</h2><div class="big" id="ex"></div><p>Mnożnik: <b id="mul"></b>. Brak limitu REP z planu.</p></div><div class="card"><h2>🥣 Twaróg</h2><div class="big" id="food">—</div><p>3.8–4.4 → sos WKDZIK • 4.5–4.7 → neutral • 4.8+ → kara</p></div></section>
+
+<section class="card"><h2>📏 Pomiary sylwetki</h2><div id="latestMeasurements" class="quad"></div><div style="overflow:auto"><table class="table"><thead><tr><th>Dzień</th><th>Data</th><th>Waga</th><th>Biceps</th><th>Klatka</th><th>Udo</th><th>Pas</th></tr></thead><tbody id="measurementHistory"></tbody></table></div></section>
+
+<section class="card"><h2>📸 Zdjęcia progresu</h2><p class="muted">Zdjęcia zapisane przez panel administratora.</p><div id="gallery" class="gallery"></div></section>
+
+<section class="card"><h2>📜 Ostatnie streamy</h2><table class="table"><thead><tr><th>Dzień</th><th>AVG</th><th>Ćwiczenie</th><th>REP</th><th>Bieg</th><th>Twaróg</th></tr></thead><tbody id="hist"></tbody></table></section>
+</main>
+<script>
+function fmt(v){return v===null||v===undefined||v===""?"—":v}
+function render(){
+ let st=G90.state,av=G90.avg(),e=G90.exercise();
+ d.textContent=st.day;a.textContent=av===null?"—":av.toFixed(2);r.textContent=G90.reps();s.textContent=(st.squats||0)+"/100";w.textContent=st.weight||"—";ex.textContent=e.label+" — "+e.name;mul.textContent="×"+e.multiplier;food.textContent=st.yesterdayFood||"START PROJEKTU";
+ const ms=st.progress?.measurements||[];
+ const last=ms[0]||{};
+ latestMeasurements.innerHTML=`<div class="stat"><b>${fmt(last.weight)}</b><small>WAGA KG</small></div><div class="stat"><b>${fmt(last.biceps)}</b><small>BICEPS CM</small></div><div class="stat"><b>${fmt(last.chest)}</b><small>KLATKA CM</small></div><div class="stat"><b>${fmt(last.thigh)}</b><small>UDO CM</small></div>`;
+ measurementHistory.innerHTML=ms.slice(0,20).map(x=>`<tr><td>${x.day}</td><td>${x.date}</td><td>${fmt(x.weight)}</td><td>${fmt(x.biceps)}</td><td>${fmt(x.chest)}</td><td>${fmt(x.thigh)}</td><td>${fmt(x.waist)}</td></tr>`).join("")||'<tr><td colspan="7">Brak pomiarów.</td></tr>';
+ const photos=st.progress?.photos||[];
+ gallery.innerHTML=photos.map(p=>`<div class="photo"><img src="${p.url}" alt="Progres dzień ${p.day} - ${p.view}"><div class="meta"><b>DAY ${p.day} • ${p.view}</b><span>${p.date}</span></div></div>`).join("")||'<p>Brak zdjęć progresu.</p>';
+ hist.innerHTML=(st.history||[]).slice(0,12).map(x=>`<tr><td>${x.day}</td><td>${x.avg.toFixed(2)}</td><td>${x.exercise}</td><td>${x.reps}</td><td>${(x.runMeters/1000).toFixed(1)} km</td><td>${x.food}</td></tr>`).join("")||'<tr><td colspan="6">Projekt jeszcze nie wystartował.</td></tr>';
+}
+addEventListener("g90update",render);setInterval(render,1000);
+</script></body></html>

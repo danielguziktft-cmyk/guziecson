@@ -1,0 +1,79 @@
+GUZIECSON 90 — v5 PROGRESS / POMIARY / ZDJĘCIA
+
+CO DOSZŁO
+- historia pomiarów: waga, biceps, klatka, udo, pas
+- upload zdjęć: Przód / Bok / Tył
+- zdjęcia w Firebase Storage
+- linki i metadane zdjęć w Realtime Database
+- publiczna galeria na index.html
+- usuwanie pomiarów i zdjęć z panelu
+
+1. FIREBASE STORAGE
+Firebase Console -> Build -> Storage -> Get started.
+
+Jeśli Firebase wymaga planu Blaze, Cloud Storage nie uruchomi się bez jego aktywacji.
+Pomiary działają niezależnie od Storage.
+
+2. STORAGE RULES
+Po uruchomieniu Storage:
+Storage -> Rules
+Otwórz storage-rules-FINAL.txt.
+
+W obu miejscach w paczce:
+WKLEJ_TUTAJ_SWOJ_UID
+zamień na ten sam UID administratora, którego użyłeś do Realtime Database.
+
+Wklej reguły w Storage -> Rules -> Publish.
+
+Te reguły:
+- pozwalają publicznie oglądać zdjęcia
+- upload/delete tylko z Twojego UID
+- przyjmują tylko pliki typu image/*
+- limit uploadu: 8 MB
+
+3. REALTIME DATABASE
+Jeśli masz już zabezpieczone reguły z v4, nie musisz ich zmieniać.
+firebase-rules-FINAL.json jest dołączony dla pewności.
+
+4. GITHUB
+Podmień:
+config.js
+app.js
+style.css
+index.html
+control.html
+overlay.html
+end.html
+start.html
+
+5. PANEL
+Po zalogowaniu zobaczysz:
+NOWY POMIAR:
+- waga
+- biceps
+- klatka
+- udo / noga
+- pas
+- data
+
+ZDJĘCIA:
+- wybierasz Przód / Bok / Tył
+- wybierasz plik
+- ustawiasz dzień
+- WRZUĆ ZDJĘCIE
+
+6. STRONA DLA WIDZÓW
+index.html automatycznie pokaże:
+- najnowsze pomiary
+- historię pomiarów
+- galerię wszystkich wrzuconych zdjęć
+
+7. REKOMENDACJA
+Zdjęcia rób:
+- ten sam aparat / odległość
+- podobne światło
+- podobna pora
+- przód / bok / tył
+- najlepiej raz na 7 dni
+
+Pomiary możesz zapisywać co 7 lub 14 dni.
