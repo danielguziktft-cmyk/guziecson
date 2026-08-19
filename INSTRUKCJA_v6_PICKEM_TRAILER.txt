@@ -1,0 +1,50 @@
+GUZIECSON 90 — v6 PICK'EM + TRAILER
+
+CO DOSZŁO:
+- aktywny Pick'Em na stronie projektu
+- przycisk do formularza Google Forms
+- status OTWARTY / ZAMKNIĘTY
+- deadline i odliczanie
+- nagroda
+- harmonogram DAY 14 / 28 / 42 / 56 / 70 / 84 / 90
+- trailer YouTube
+- trailer jest UKRYTY, jeśli nie wpiszesz linku
+- wszystko sterowane z control.html i Firebase
+
+JAK USTAWIĆ PICK'EM:
+1. Otwórz control.html i zaloguj się.
+2. Sekcja "Pick'Em + trailer".
+3. Wklej:
+   - numer edycji, np. #1
+   - tytuł
+   - nagrodę
+   - link do Google Forms
+   - deadline
+   - opis
+4. Zaznacz "Pokazuj Pick'Em na stronie".
+5. Kliknij ZAPISZ PICK'EM + TRAILER.
+
+Strona index.html pokaże Pick'Em automatycznie.
+
+TRAILER:
+- dopóki "Link do trailera YouTube" jest pusty, sekcja trailera nie istnieje dla widza
+- po publikacji trailera po prostu wklejasz link YouTube i zapisujesz
+- obsługiwane są youtube.com/watch?v=..., youtu.be/... oraz /shorts/...
+
+DEADLINE:
+Po upłynięciu deadline strona sama pokazuje:
+PICK'EM ZAMKNIĘTY
+i blokuje przycisk.
+
+UWAGA:
+Google Forms nadal trzeba zamknąć osobno w samym Google Forms, jeśli chcesz fizycznie zablokować nowe odpowiedzi.
+Status na stronie projektu nie zmienia ustawień Google Forms.
+
+GITHUB:
+Podmień pliki:
+- app.js
+- style.css
+- index.html
+- control.html
+
+Pozostałe pliki z v5 mogą zostać, ale najprościej wrzucić całą paczkę v6.

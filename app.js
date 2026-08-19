@@ -9,6 +9,18 @@ const defaults = {
   history: [],
   yesterdayFood: null,
   notes: "",
+  promo: {
+    trailerUrl: "",
+    pickem: {
+      enabled: false,
+      title: "PICK'EM — Zgadnij wagę Guziecsona",
+      description: "Zgadnij moją wagę na czczo i wyniki streama.",
+      url: "",
+      deadline: "",
+      prize: "Wybrany smak kreatyny WKDZIK",
+      edition: "#1"
+    }
+  },
   progress: {
     measurements: [],
     photos: []
@@ -29,6 +41,14 @@ function normalize(raw){
     ...raw,
     games: Array.isArray(raw.games) ? raw.games : [],
     history: Array.isArray(raw.history) ? raw.history : [],
+    promo: {
+      ...defaults.promo,
+      ...(raw.promo || {}),
+      pickem: {
+        ...defaults.promo.pickem,
+        ...((raw.promo || {}).pickem || {})
+      }
+    },
     progress: {
       measurements: Array.isArray(raw.progress?.measurements) ? raw.progress.measurements : [],
       photos: Array.isArray(raw.progress?.photos) ? raw.progress.photos : []

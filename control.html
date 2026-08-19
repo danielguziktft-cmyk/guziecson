@@ -39,7 +39,45 @@
 <div id="adminGallery" class="gallery"></div>
 </section>
 
-<section class="card"><h2>7. Końcówka streama</h2><div id="summary" class="big">—</div><button onclick="finishPreview()">WYLICZ BIEG NA KONIEC STREAMA</button><button class="danger" onclick="if(confirm('Zapisać stream i przejść do kolejnego dnia?')) G90.nextDay()">ZAPISZ STREAM + NASTĘPNY DZIEŃ</button></section>
+
+<section class="card">
+  <h2 class="admin-section-title">🎯 Pick'Em + trailer</h2>
+  <p class="helper">Tu sterujesz tym, co widzowie zobaczą na stronie projektu. Trailer jest całkowicie ukryty, dopóki nie wpiszesz linku YouTube.</p>
+
+  <div class="formgrid">
+    <label>Numer / edycja Pick'Emu
+      <input id="pEdition" type="text" placeholder="#1">
+    </label>
+    <label>Tytuł Pick'Emu
+      <input id="pTitle" type="text" placeholder="PICK'EM — Zgadnij wagę Guziecsona">
+    </label>
+    <label>Nagroda
+      <input id="pPrize" type="text" placeholder="Wybrany smak kreatyny WKDZIK">
+    </label>
+    <label>Link do Google Forms
+      <input id="pUrl" type="url" placeholder="https://docs.google.com/forms/...">
+    </label>
+    <label>Deadline
+      <input id="pDeadline" type="datetime-local">
+    </label>
+    <label>Link do trailera YouTube
+      <input id="trailerUrl" type="url" placeholder="https://youtu.be/...">
+    </label>
+  </div>
+
+  <label style="margin-top:12px">Opis Pick'Emu
+    <textarea id="pDescription" rows="3" placeholder="Zgadnij moją wagę na czczo i wyniki streama."></textarea>
+  </label>
+
+  <label class="inline-check" style="margin-top:14px">
+    <input id="pEnabled" type="checkbox">
+    <span>Pokazuj Pick'Em na stronie</span>
+  </label>
+
+  <button onclick="savePromo()">ZAPISZ PICK'EM + TRAILER</button>
+  <p id="promoStatus"></p>
+</section>
+<section class="card"><h2>8. Końcówka streama</h2><div id="summary" class="big">—</div><button onclick="finishPreview()">WYLICZ BIEG NA KONIEC STREAMA</button><button class="danger" onclick="if(confirm('Zapisać stream i przejść do kolejnego dnia?')) G90.nextDay()">ZAPISZ STREAM + NASTĘPNY DZIEŃ</button></section>
 
 <section class="card"><h2>⚠️ Reset</h2><button class="secondary" onclick="if(confirm('Zresetować dzisiejszy stream?')) G90.resetStream()">RESET DZISIEJSZEGO STREAMA</button><button class="danger" onclick="if(confirm('UWAGA: usunąć CAŁY progress projektu?')) G90.resetProject()">RESET CAŁEGO PROJEKTU</button></section>
 </main>
@@ -61,6 +99,16 @@ function render(){
  measurementsAdmin.innerHTML=ms.map(x=>`<tr><td>${x.day}</td><td>${x.date}</td><td>${fmt(x.weight)}</td><td>${fmt(x.biceps)}</td><td>${fmt(x.chest)}</td><td>${fmt(x.thigh)}</td><td>${fmt(x.waist)}</td><td><button class="danger" onclick="G90.deleteMeasurement(${x.ts})">USUŃ</button></td></tr>`).join("")||'<tr><td colspan="8">Brak pomiarów.</td></tr>';
  const ps=st.progress?.photos||[];
  adminGallery.innerHTML=ps.map(p=>`<div class="photo"><img src="${p.url}"><div class="meta"><b>DAY ${p.day} • ${p.view}</b><span>${p.date}</span><button class="danger" onclick="deletePhoto(${p.ts}, '${p.path}')">USUŃ</button></div></div>`).join("")||'<p>Brak zdjęć.</p>';
+
+ const promo=st.promo||{}, p=promo.pickem||{};
+ setIfNotEditing(pEdition,p.edition||"#1");
+ setIfNotEditing(pTitle,p.title||"");
+ setIfNotEditing(pPrize,p.prize||"");
+ setIfNotEditing(pUrl,p.url||"");
+ setIfNotEditing(pDeadline,p.deadline||"");
+ setIfNotEditing(trailerUrl,promo.trailerUrl||"");
+ setIfNotEditing(pDescription,p.description||"");
+ if(document.activeElement!==pEnabled) pEnabled.checked=!!p.enabled;
 }
 async function saveMeta(){G90.state.day=Number(day.value)||1;G90.state.weight=weight.value?Number(weight.value):null;G90.state.notes=notes.value;await G90.save();}
 async function saveDonations(){G90.state.donationsPLN=Number(don.value)||0;await G90.save();}
@@ -88,6 +136,22 @@ async function deletePhoto(ts,path){
  if(!confirm("Usunąć to zdjęcie?"))return;
  try{if(path)await storage.ref(path).delete();}catch(e){console.warn(e)}
  await G90.deletePhoto(ts);
+}
+async function savePromo(){
+  G90.state.promo = G90.state.promo || {};
+  G90.state.promo.trailerUrl = trailerUrl.value.trim();
+  G90.state.promo.pickem = {
+    enabled: pEnabled.checked,
+    edition: pEdition.value.trim() || "#1",
+    title: pTitle.value.trim() || "PICK'EM — Zgadnij wagę Guziecsona",
+    description: pDescription.value.trim(),
+    url: pUrl.value.trim(),
+    deadline: pDeadline.value,
+    prize: pPrize.value.trim() || "Wybrany smak kreatyny WKDZIK"
+  };
+  await G90.save();
+  promoStatus.textContent="Zapisano. Strona zaktualizowała się live.";
+  setTimeout(()=>promoStatus.textContent="",2500);
 }
 function finishPreview(){let av=G90.avg();summary.innerHTML=av===null?"Brak gier.":`AVG ${av.toFixed(2)} → ${G90.foodFor(av)} jutro • BIEG: ${(G90.finalRun()/1000).toFixed(1)} KM`;}
 addEventListener("g90update",render);

@@ -3,6 +3,32 @@
 <script src="config.js"></script><script src="app.js"></script>
 <header class="hero"><div class="wrap"><div class="eyebrow">GUZIKSON • 90-DNIOWY PROJEKT</div><h1>Z Guziksona do <em>Guziecsona</em><br>w 90 DNI</h1><p class="lead">Każda gra w TFT ma konsekwencje. Miejsce zamienia się w powtórzenia między grami, AVG ustala twaróg na następny stream i bieg na końcówkę streama.</p><div class="stats"><div class="stat"><b id="d">1</b><small>DZIEŃ / 90</small></div><div class="stat"><b id="a">—</b><small>AVG</small></div><div class="stat"><b id="r">0</b><small>REP</small></div><div class="stat"><b id="s">0/100</b><small>PRZYSIADY</small></div><div class="stat"><b id="w">—</b><small>WAGA KG</small></div></div></div></header>
 <main class="wrap">
+<section class="promo-hero">
+  <article id="pickemCard" class="card pickem-card" style="display:none">
+    <div id="pickemStatus" class="pickem-status">● PICK'EM OTWARTY</div>
+    <div class="pickem-title" id="pickemTitle">PICK'EM</div>
+    <p id="pickemDescription"></p>
+    <p>🏆 <b id="pickemPrize"></b></p>
+    <div class="countdown" id="pickemCountdown"></div>
+    <a id="pickemButton" class="cta" href="#" target="_blank" rel="noopener">WEŹ UDZIAŁ W PICK'EMIE</a>
+  </article>
+
+  <article id="trailerCard" class="card" style="display:none">
+    <div class="eyebrow">TRAILER PROJEKTU</div>
+    <h2>🎬 Zobacz trailer</h2>
+    <div class="trailer-wrap">
+      <iframe id="trailerFrame" title="Trailer projektu" allowfullscreen></iframe>
+    </div>
+  </article>
+</section>
+
+<section class="card">
+  <h2>📅 Pick'Emy w trakcie projektu</h2>
+  <div class="schedule">
+    <span>DAY 14</span><span>DAY 28</span><span>DAY 42</span><span>DAY 56</span><span>DAY 70</span><span>DAY 84</span><span>DAY 90<br>FINAŁ</span>
+  </div>
+</section>
+
 <section class="grid"><div class="card"><h2>🎮 Dzisiejszy trening</h2><div class="big" id="ex"></div><p>Mnożnik: <b id="mul"></b>. Brak limitu REP z planu.</p></div><div class="card"><h2>🥣 Twaróg</h2><div class="big" id="food">—</div><p>3.8–4.4 → sos WKDZIK • 4.5–4.7 → neutral • 4.8+ → kara</p></div></section>
 
 <section class="card"><h2>📏 Pomiary sylwetki</h2><div id="latestMeasurements" class="quad"></div><div style="overflow:auto"><table class="table"><thead><tr><th>Dzień</th><th>Data</th><th>Waga</th><th>Biceps</th><th>Klatka</th><th>Udo</th><th>Pas</th></tr></thead><tbody id="measurementHistory"></tbody></table></div></section>
@@ -24,5 +50,64 @@ function render(){
  gallery.innerHTML=photos.map(p=>`<div class="photo"><img src="${p.url}" alt="Progres dzień ${p.day} - ${p.view}"><div class="meta"><b>DAY ${p.day} • ${p.view}</b><span>${p.date}</span></div></div>`).join("")||'<p>Brak zdjęć progresu.</p>';
  hist.innerHTML=(st.history||[]).slice(0,12).map(x=>`<tr><td>${x.day}</td><td>${x.avg.toFixed(2)}</td><td>${x.exercise}</td><td>${x.reps}</td><td>${(x.runMeters/1000).toFixed(1)} km</td><td>${x.food}</td></tr>`).join("")||'<tr><td colspan="6">Projekt jeszcze nie wystartował.</td></tr>';
 }
-addEventListener("g90update",render);setInterval(render,1000);
+
+function youtubeEmbed(url){
+  if(!url) return "";
+  try{
+    const u=new URL(url);
+    if(u.hostname.includes("youtu.be")) return "https://www.youtube.com/embed/"+u.pathname.replace("/","");
+    if(u.hostname.includes("youtube.com")){
+      if(u.pathname.startsWith("/shorts/")) return "https://www.youtube.com/embed/"+u.pathname.split("/")[2];
+      const v=u.searchParams.get("v");
+      if(v) return "https://www.youtube.com/embed/"+v;
+    }
+  }catch(e){}
+  return "";
+}
+function renderPromo(){
+  const promo=G90.state.promo||{};
+  const p=promo.pickem||{};
+  const now=Date.now();
+  const deadline=p.deadline?new Date(p.deadline).getTime():null;
+  const open=!!p.enabled && !!p.url && (!deadline || deadline>now);
+
+  pickemCard.style.display=(p.enabled||p.url)?"block":"none";
+  pickemTitle.textContent=(p.edition?p.edition+" — ":"")+(p.title||"PICK'EM");
+  pickemDescription.textContent=p.description||"";
+  pickemPrize.textContent=p.prize||"Nagroda";
+  pickemButton.href=p.url||"#";
+
+  if(open){
+    pickemStatus.textContent="● PICK'EM OTWARTY";
+    pickemStatus.classList.remove("closed");
+    pickemButton.textContent="WEŹ UDZIAŁ W PICK'EMIE";
+    pickemButton.classList.remove("disabled");
+  }else{
+    pickemStatus.textContent="● PICK'EM ZAMKNIĘTY";
+    pickemStatus.classList.add("closed");
+    pickemButton.textContent="PICK'EM ZAMKNIĘTY";
+    pickemButton.classList.add("disabled");
+  }
+
+  if(deadline){
+    const diff=deadline-now;
+    if(diff>0){
+      const d=Math.floor(diff/86400000);
+      const h=Math.floor((diff%86400000)/3600000);
+      const m=Math.floor((diff%3600000)/60000);
+      pickemCountdown.textContent=`Zamknięcie za: ${d}d ${h}h ${m}min`;
+    }else{
+      pickemCountdown.textContent="Zgłoszenia zamknięte";
+    }
+  }else{
+    pickemCountdown.textContent="";
+  }
+
+  const embed=youtubeEmbed(promo.trailerUrl||"");
+  trailerCard.style.display=embed?"block":"none";
+  if(embed && trailerFrame.src!==embed) trailerFrame.src=embed;
+}
+addEventListener("g90update",()=>{render();renderPromo();});
+setInterval(renderPromo,30000);
+
 </script></body></html>
