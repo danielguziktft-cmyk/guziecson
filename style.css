@@ -25,3 +25,71 @@
 .schedule-three b{display:block;font-size:18px;margin-bottom:5px}
 .schedule-three small{display:block;margin-top:7px;opacity:.6;font-weight:500}
 @media(max-width:700px){.schedule-three{grid-template-columns:1fr}}
+
+/* ===== v7: GUZIEC BACKGROUND ===== */
+body{
+  position:relative;
+  overflow-x:hidden;
+  background:
+    linear-gradient(rgba(11,12,16,.95),rgba(11,12,16,.97)),
+    url("assets/guziec-texture.png") center top / cover fixed no-repeat,
+    #0b0c10;
+}
+
+.page-shell{
+  position:relative;
+  z-index:2;
+}
+
+.guziec-decor{
+  position:fixed;
+  top:70px;
+  bottom:0;
+  width:min(27vw,420px);
+  z-index:1;
+  pointer-events:none;
+  background-repeat:no-repeat;
+  background-size:contain;
+  opacity:.88;
+  filter:saturate(1.08) contrast(1.05);
+}
+
+.guziec-left{
+  left:-15px;
+  background-image:url("assets/guziec-left.png");
+  background-position:left top;
+}
+
+.guziec-right{
+  right:-15px;
+  background-image:url("assets/guziec-right.png");
+  background-position:right top;
+}
+
+.hero,
+.wrap{
+  position:relative;
+  z-index:3;
+}
+
+.hero{
+  backdrop-filter:blur(1px);
+}
+
+.card,.stat{
+  box-shadow:0 14px 40px rgba(0,0,0,.22);
+  backdrop-filter:blur(6px);
+}
+
+@media (max-width:1200px){
+  .guziec-decor{width:22vw;opacity:.58}
+}
+@media (max-width:900px){
+  .guziec-decor{display:none}
+  body{
+    background:
+      linear-gradient(rgba(11,12,16,.97),rgba(11,12,16,.99)),
+      url("assets/guziec-texture.png") center top / cover fixed no-repeat,
+      #0b0c10;
+  }
+}

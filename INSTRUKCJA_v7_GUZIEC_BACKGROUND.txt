@@ -1,0 +1,50 @@
+GUZIECSON 90 — v7 GUZIEC BACKGROUND
+
+CO SIĘ ZMIENIŁO
+- publiczna strona index.html ma teraz kreskówkowe Guźce po obu bokach
+- dekoracje są półprzezroczyste i nie blokują kliknięć
+- środek strony pozostaje czytelny
+- na mniejszych ekranach / telefonach boczne Guźce automatycznie znikają
+- w tle jest bardzo delikatna tekstura z motywem Guźca
+- control.html, overlay.html i end.html pozostają czyste i funkcjonalne
+
+NOWE PLIKI:
+assets/guziec-left.png
+assets/guziec-right.png
+assets/guziec-texture.png
+
+GITHUB:
+Najprościej wrzuć CAŁĄ zawartość paczki v7 do repo, zachowując folder assets/.
+
+Krytycznie ważne:
+assets/ musi być w głównym katalogu repo obok index.html.
+
+Przykład:
+/
+  index.html
+  control.html
+  overlay.html
+  app.js
+  style.css
+  assets/
+    guziec-left.png
+    guziec-right.png
+    guziec-texture.png
+
+Po wrzuceniu:
+- poczekaj na deploy GitHub Pages
+- zrób Ctrl+Shift+R
+- sprawdź index.html na desktopie i telefonie
+
+FUNKCJONALNOŚĆ:
+Zachowana z v6.1:
+- Firebase Realtime Database
+- Firebase Auth
+- Firebase Storage
+- zdjęcia progresu
+- pomiary
+- 3 Pick'Emy
+- aktywny Pick'Em
+- trailer YouTube
+- overlay OBS
+- ekran końcówki streama
