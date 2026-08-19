@@ -1,0 +1,62 @@
+GUZIECSON 90 — FINALNE ZABEZPIECZENIE
+
+1. FIREBASE AUTHENTICATION
+Firebase Console -> Build -> Authentication -> Get started.
+Zakładka Sign-in method -> Email/Password -> Enable -> Save.
+
+2. UTWÓRZ TYLKO SWOJE KONTO
+Authentication -> Users -> Add user.
+Podaj swój e-mail i mocne hasło.
+Nie dodawaj kont dla widzów.
+
+3. SKOPIUJ UID
+Po utworzeniu użytkownika w tabeli Users zobaczysz kolumnę User UID.
+Skopiuj UID.
+
+4. REGUŁY REALTIME DATABASE
+Otwórz firebase-rules-FINAL.json.
+Zamień:
+WKLEJ_TUTAJ_SWOJ_UID
+na swój prawdziwy UID.
+
+Firebase Console -> Realtime Database -> Rules.
+Wklej wynik i kliknij Publish.
+
+Efekt:
+- każdy może READ, więc index.html, overlay.html i end.html działają publicznie;
+- WRITE ma tylko dokładnie konto z Twoim UID.
+
+5. GITHUB
+Podmień pliki w repo na pliki z tej paczki.
+W szczególności:
+app.js
+config.js
+control.html
+index.html
+overlay.html
+end.html
+start.html
+style.css
+
+6. PANEL
+Wejdź na:
+https://TWOJ_LOGIN.github.io/TWOJE_REPO/control.html
+
+Zobaczysz ekran logowania.
+Zaloguj się e-mailem/hasłem z Firebase Authentication.
+
+7. TEST BEZ LOGOWANIA
+Otwórz control.html w oknie incognito.
+Panel nie powinien być dostępny bez zalogowania.
+
+8. OBS
+Browser Source:
+https://TWOJ_LOGIN.github.io/TWOJE_REPO/overlay.html
+500 x 250
+
+OBS NIE musi się logować, bo ma tylko publiczny odczyt.
+
+9. WAŻNE
+Nie publikuj hasła do Firebase.
+firebaseConfig w config.js może być publiczny — ochroną bazy są Security Rules.
+Nie wrzucaj do GitHuba service account JSON, private_key ani client_secret.

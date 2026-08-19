@@ -1,3 +1,4 @@
+
 const CFG = window.G90_CONFIG;
 const defaults = {
   day: 1,
@@ -14,7 +15,7 @@ const defaults = {
 let state = JSON.parse(JSON.stringify(defaults));
 let ready = false;
 
-firebase.initializeApp(CFG.firebaseConfig);
+if (!firebase.apps.length) firebase.initializeApp(CFG.firebaseConfig);
 const db = firebase.database();
 const stateRef = db.ref("project/state");
 
@@ -31,12 +32,7 @@ function normalize(raw){
 
 stateRef.on("value", snap => {
   const raw = snap.val();
-  if (raw === null) {
-    state = JSON.parse(JSON.stringify(defaults));
-    stateRef.set(state);
-  } else {
-    state = normalize(raw);
-  }
+  state = raw === null ? JSON.parse(JSON.stringify(defaults)) : normalize(raw);
   ready = true;
   window.dispatchEvent(new Event("g90update"));
 });
@@ -75,9 +71,7 @@ function finalRun(){
 function save(){ return stateRef.set(state); }
 
 async function nextDay(){
-  const a = avg();
-  const ex = exercise();
-
+  const a = avg(), ex = exercise();
   if(state.games.length){
     state.history.unshift({
       day: state.day,
@@ -90,7 +84,6 @@ async function nextDay(){
       games: [...state.games]
     });
   }
-
   state.yesterdayFood = foodFor(a);
   state.day = Math.min(CFG.maxDays, Number(state.day)+1);
   state.games = [];
