@@ -13,7 +13,7 @@
 
 <section class="card"><h2>4. Dane projektu</h2><div class="formgrid"><label>Dzień<input id="day" type="number" min="1" max="90"></label><label>Waga kg<input id="weight" type="number" step=".1"></label><label>Notatka<textarea id="notes"></textarea></label></div><button onclick="saveMeta()">ZAPISZ DANE</button></section>
 
-<section class="card"><h2>5. 📏 Nowy pomiar sylwetki</h2>
+<section class="card"><h2>5. 📏 Nowy pomiar sylwetki</h2><p class="helper">Oficjalne pełne pomiary porównawcze: DAY 1 / DAY 30 / DAY 60 / DAY 90. Możesz oczywiście zapisywać dodatkowe pomiary częściej.</p>
 <div class="formgrid">
 <label>Waga (kg)<input id="mWeight" type="number" step=".1"></label>
 <label>Biceps (cm)<input id="mBiceps" type="number" step=".1"></label>
@@ -42,7 +42,7 @@
 
 <section class="card">
   <h2 class="admin-section-title">🎯 Pick'Em + trailer</h2>
-  <p class="helper">Tu sterujesz aktualnie aktywnym Pick’Emem. W projekcie planowane są tylko 3 edycje: około DAY 30, około DAY 60 oraz finał DAY 90. Trailer jest ukryty, dopóki nie wpiszesz linku YouTube.</p>
+  <p class="helper">Tu sterujesz aktualnie aktywnym Pick’Emem. #1 i #2 są około DAY 30 i DAY 60 z kreatyną WKDZIK. Finał DAY 90 obejmuje wszystkie pomiary i statystyki projektu, a główną nagrodą jest białko WKDZIK. Trailer jest ukryty, dopóki nie wpiszesz linku YouTube.</p>
 
   <div class="formgrid">
     <label>Numer / edycja Pick'Emu
@@ -53,6 +53,7 @@
     </label>
     <label>Nagroda
       <input id="pPrize" type="text" placeholder="Wybrany smak kreatyny WKDZIK">
+      <span class="helper">#1/#2: kreatyna WKDZIK • finał: białko WKDZIK</span>
     </label>
     <label>Link do Google Forms
       <input id="pUrl" type="url" placeholder="https://docs.google.com/forms/...">

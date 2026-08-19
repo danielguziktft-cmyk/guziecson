@@ -16,9 +16,9 @@ window.G90_CONFIG = {
     measurementId: "G-M4E47SFRFY"
   },
   exercises: [
-    {name:"Pompki", label:"PUSH 1", multiplier:4},
-    {name:"Wiosłowanie hantlami w opadzie", label:"PULL 1", multiplier:3},
-    {name:"OHP hantlami siedząc", label:"PUSH 2", multiplier:3},
-    {name:"Podciąganie na kółkach gimnastycznych", label:"PULL 2", multiplier:3}
+    {name:"Pompki", label:"PUSH 1", multiplier:4, repLabel:"POMPEK"},
+    {name:"Wiosłowanie hantlami w opadzie", label:"PULL 1", multiplier:3, repLabel:"POWT. WIOSŁOWANIA"},
+    {name:"OHP hantlami siedząc", label:"PUSH 2", multiplier:3, repLabel:"POWT. OHP"},
+    {name:"Podciąganie na kółkach gimnastycznych", label:"PULL 2", multiplier:3, repLabel:"PODCIĄGNIĘĆ"}
   ]
 };

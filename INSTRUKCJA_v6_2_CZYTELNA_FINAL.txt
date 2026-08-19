@@ -1,0 +1,53 @@
+GUZIECSON 90 — v6.2 CZYTELNA FINAL
+
+NAJWAŻNIEJSZE ZMIANY
+
+1. STRONA TŁUMACZY PROJEKT W 10 SEKUND
+Na samej górze są 4 zasady:
+- TFT -> REP
+- REP robione od razu między grami
+- AVG -> twaróg na początku NASTĘPNEGO streama
+- AVG + donejty -> bieg pod koniec BIEŻĄCEGO streama
+
+2. POPRAWIONY PRÓG WKDZIK
+AVG <= 4.4 = sos WKDZIK
+4.5–4.7 = neutral
+4.8+ = kara
+
+3. BIEG I TWARÓG SĄ WYRAŹNIE ROZDZIELONE
+Bieg: pod koniec aktualnego streama.
+Twaróg: na początku następnego streama.
+
+4. OVERLAY PO KAŻDEJ GRZE
+Po kliknięciu miejsca w control.html overlay przez ok. 8 sekund pokaże np.:
+5. MIEJSCE ×4
++20 POMPEK
+
+Potem wraca do zwykłego widoku.
+
+5. POMIARY
+Oficjalne pełne pomiary:
+DAY 1 / DAY 30 / DAY 60 / DAY 90
+
+6. PICK'EMY
+#1 około DAY 30 — kreatyna WKDZIK
+#2 około DAY 60 — kreatyna WKDZIK
+FINAŁ DAY 90 — wszystkie pomiary + statystyki projektu
+GŁÓWNA NAGRODA FINAŁU: BIAŁKO WKDZIK
+
+7. PRZYSIADY
+Limit 100 dotyczy WYŁĄCZNIE przysiadów z punktów kanału.
+Główne ćwiczenie z TFT nie ma limitu REP.
+
+GITHUB
+Najprościej podmień całą zawartość repo plikami z v6.2.
+
+Po deployu:
+- Ctrl+Shift+R na stronie
+- odśwież Browser Source w OBS
+- zrób test klikając np. 5. miejsce w control.html
+- overlay powinien pokazać alert z nowymi REP
+
+FIREBASE
+Nie trzeba zmieniać reguł ani konfiguracji.
+Stare dane pozostają kompatybilne. Pole lastGame zostanie dodane przy pierwszym nowym wyniku.

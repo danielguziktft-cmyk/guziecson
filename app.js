@@ -4,6 +4,7 @@ const defaults = {
   day: 1,
   weight: null,
   games: [],
+  lastGame: null,
   squats: 0,
   donationsPLN: 0,
   history: [],
@@ -67,10 +68,9 @@ function exercise(){ return CFG.exercises[(Math.max(1, Number(state.day))-1)%CFG
 function avg(){ return state.games.length ? state.games.reduce((a,b)=>a+Number(b.place),0)/state.games.length : null; }
 function foodFor(a){
   if(a===null) return null;
-  if(a>=3.8 && a<=4.4) return "SOS WKDZIK";
-  if(a>=4.5 && a<=4.7) return "NEUTRAL";
-  if(a>=4.8) return "KARA";
-  return "SOS WKDZIK";
+  if(a<=4.4) return "SOS WKDZIK";
+  if(a<=4.7) return "NEUTRAL";
+  return "KARA";
 }
 function reps(){ const m=exercise().multiplier; return state.games.reduce((s,g)=>s+Number(g.place)*m,0); }
 function avgRunMeters(a){
@@ -95,7 +95,7 @@ async function nextDay(){
   }
   state.yesterdayFood=foodFor(a);
   state.day=Math.min(CFG.maxDays,Number(state.day)+1);
-  state.games=[]; state.squats=0; state.donationsPLN=0;
+  state.games=[]; state.lastGame=null; state.squats=0; state.donationsPLN=0;
   await save();
 }
 
@@ -103,10 +103,22 @@ window.G90 = {
   get state(){return state},
   get ready(){return ready},
   save,avg,foodFor,reps,exercise,avgRunMeters,donationMeters,finalRun,nextDay,
-  addGame(place){state.games.push({place:Number(place),ts:Date.now()});return save();},
-  undoGame(){state.games.pop();return save();},
+  addGame(place){
+    const p=Number(place), e=exercise(), ts=Date.now();
+    state.games.push({place:p,ts});
+    state.lastGame={
+      place:p,
+      multiplier:e.multiplier,
+      reps:p*e.multiplier,
+      exercise:e.name,
+      repLabel:e.repLabel || "REP",
+      ts
+    };
+    return save();
+  },
+  undoGame(){state.games.pop();state.lastGame=null;return save();},
   addSquats(n){state.squats=Math.min(CFG.squatCap,Number(state.squats||0)+n);return save();},
-  resetStream(){state.games=[];state.squats=0;state.donationsPLN=0;return save();},
+  resetStream(){state.games=[];state.lastGame=null;state.squats=0;state.donationsPLN=0;return save();},
   async resetProject(){state=JSON.parse(JSON.stringify(defaults));await save();},
   set(k,v){state[k]=v;return save();},
   async addMeasurement(m){

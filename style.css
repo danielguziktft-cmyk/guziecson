@@ -25,3 +25,40 @@
 .schedule-three b{display:block;font-size:18px;margin-bottom:5px}
 .schedule-three small{display:block;margin-top:7px;opacity:.6;font-weight:500}
 @media(max-width:700px){.schedule-three{grid-template-columns:1fr}}
+
+
+/* ===== v6.2 — czytelna hierarchia projektu ===== */
+.hero .lead strong{color:#fff}
+.how-title{margin-bottom:4px}
+.how-subtitle{margin-top:0;opacity:.65;max-width:760px}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+.how-card{background:#17181f;border:1px solid #2b2c35;border-radius:16px;padding:18px}
+.how-card .icon{font-size:25px;display:block;margin-bottom:10px}
+.how-card b{display:block;font-size:17px;margin-bottom:5px}
+.how-card p{margin:0;line-height:1.45;opacity:.7;font-size:14px}
+.rule-strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.rule-chip{background:#1c1d24;border:1px solid #30313a;border-radius:999px;padding:9px 12px;font-size:13px;font-weight:800}
+.consequence-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.consequence-card{background:#16171d;border:1px solid #292a33;border-radius:16px;padding:20px}
+.consequence-card .when{font-size:12px;letter-spacing:1px;opacity:.55;font-weight:900}
+.consequence-card h3{font-size:22px;margin:7px 0}
+.consequence-card p{margin:0;opacity:.72;line-height:1.5}
+.food-legend,.run-legend{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}
+.food-legend span,.run-legend span{background:#202129;border-radius:9px;padding:7px 9px;font-size:12px;font-weight:800}
+.measurement-days{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 18px}
+.measurement-days span{background:#21182a;border:1px solid #453052;color:#e3c5ff;border-radius:999px;padding:8px 12px;font-weight:900}
+.final-prize{display:inline-block;margin-top:8px;padding:7px 10px;border-radius:999px;background:#2b1e34;color:#e6c9ff;font-size:12px;font-weight:900}
+.overlay{position:relative}
+.game-alert{display:none;margin-top:10px;background:#c48cff;color:#111;border-radius:11px;padding:10px 12px;font-weight:950;line-height:1.15;text-align:center;box-shadow:0 8px 26px rgba(196,140,255,.22)}
+.game-alert.show{display:block}
+.game-alert .game-place{font-size:13px;opacity:.72}
+.game-alert .game-reps{font-size:20px;margin-top:2px}
+.project-priority{padding:14px 16px;border-left:4px solid #c48cff;background:#15161c;border-radius:0 12px 12px 0;margin-top:18px;line-height:1.5}
+.project-priority b{color:#e5c9ff}
+
+@media(max-width:900px){
+  .how-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:650px){
+  .how-grid,.consequence-grid{grid-template-columns:1fr}
+}

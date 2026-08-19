@@ -1,3 +1,49 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><link rel="stylesheet" href="style.css"></head><body class="obs"><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="obs">
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
-<script src="config.js"></script><script src="app.js"></script><div class="overlay"><div class="top">Z GUZIKSONA DO GUZIECSONA • <span id="d"></span>/90</div><div class="line"><span id="ex"></span><span id="mul"></span></div><div class="line"><span>AVG <b id="a"></b></span><span>PRZYSIADY <b id="s"></b>/100</span></div><div class="rep"><span id="r"></span> REP</div><div id="f"></div></div><script>function render(){let av=G90.avg(),e=G90.exercise();d.textContent=G90.state.day;ex.textContent=e.name;mul.textContent="×"+e.multiplier;a.textContent=av===null?"—":av.toFixed(2);s.textContent=G90.state.squats||0;r.textContent=G90.reps();f.textContent=G90.state.yesterdayFood?"DZISIAJ: "+G90.state.yesterdayFood:"";}addEventListener("g90update",render);</script></body></html>
+<script src="config.js"></script><script src="app.js"></script>
+<div class="overlay">
+  <div class="top">Z GUZIKSONA DO GUZIECSONA • <span id="d"></span>/90</div>
+  <div class="line"><span id="ex"></span><span id="mul"></span></div>
+  <div class="line"><span>AVG <b id="a"></b></span><span>PRZYSIADY <b id="s"></b>/100</span></div>
+  <div class="rep"><span id="r"></span> REP</div>
+  <div id="f"></div>
+
+  <div id="gameAlert" class="game-alert">
+    <div id="gamePlace" class="game-place"></div>
+    <div id="gameReps" class="game-reps"></div>
+  </div>
+</div>
+
+<script>
+function render(){
+  const av=G90.avg(),e=G90.exercise(),lg=G90.state.lastGame;
+  d.textContent=G90.state.day;
+  ex.textContent=e.name;
+  mul.textContent="×"+e.multiplier;
+  a.textContent=av===null?"—":av.toFixed(2);
+  s.textContent=G90.state.squats||0;
+  r.textContent=G90.reps();
+  f.textContent=G90.state.yesterdayFood?"DZISIAJ: "+G90.state.yesterdayFood:"";
+
+  const fresh=lg && (Date.now()-Number(lg.ts||0) < 8000);
+  if(fresh){
+    gamePlace.textContent=`${lg.place}. MIEJSCE ×${lg.multiplier}`;
+    gameReps.textContent=`+${lg.reps} ${lg.repLabel||"REP"}`;
+    gameAlert.classList.add("show");
+  }else{
+    gameAlert.classList.remove("show");
+  }
+}
+addEventListener("g90update",render);
+setInterval(render,500);
+</script>
+</body>
+</html>
