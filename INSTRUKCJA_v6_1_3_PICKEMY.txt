@@ -1,0 +1,43 @@
+GUZIECSON 90 — v6.1 — 3 PICK'EMY
+
+PLAN:
+1. PICK'EM #1 — około DAY 30
+   - główne pytanie: waga na czczo
+   - tie-breakery: AVG, liczba gier, REP, bieg
+   - nagroda: wybrany smak kreatyny WKDZIK
+
+2. PICK'EM #2 — około DAY 60
+   - taki sam format jak #1
+   - nowe typy i nowa szansa na nagrodę
+   - nagroda: wybrany smak kreatyny WKDZIK
+
+3. PICK'EM FINAŁOWY — DAY 90
+   Proponowane pytania:
+   - końcowa waga
+   - biceps
+   - klatka
+   - udo
+   - pas
+   - średni AVG TFT z całego projektu
+   - łączna liczba REP
+   - łączna liczba gier
+   - łączny dystans biegania
+
+Na stronie harmonogram pokazuje tylko te trzy wydarzenia.
+
+control.html nadal zarządza JEDNYM aktualnie aktywnym Pick'Emem:
+- numer edycji
+- tytuł
+- opis
+- nagroda
+- link
+- deadline
+- status otwarty/zamknięty
+
+Gdy kończy się #1:
+- wyłączasz checkbox
+- później wpisujesz dane #2
+- analogicznie z finałem
+
+TRAILER:
+Bez zmian. Sekcja pojawia się dopiero po wpisaniu URL YouTube.
