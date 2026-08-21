@@ -62,3 +62,29 @@
 @media(max-width:650px){
   .how-grid,.consequence-grid{grid-template-columns:1fr}
 }
+
+
+/* ===== v6.3 — OFF DAYS + poprawiona waga/pomiary ===== */
+.day-banner{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:18px;padding:13px 16px;border:1px solid #30313a;background:#15161c;border-radius:14px}
+.day-banner strong{font-size:15px}
+.day-banner span{opacity:.65;font-size:13px}
+.day-banner.off{border-color:#60442b;background:#201a15}
+.day-banner.off strong{color:#ffd08a}
+.status-pill{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;background:#203126;color:#8ce99a;font-size:12px;font-weight:900}
+.status-pill.off{background:#3a2a1b;color:#ffd08a}
+.measure-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.weight-panel{display:grid;grid-template-columns:.7fr 1.3fr;gap:14px;align-items:start}
+.current-weight-box{text-align:center;padding:28px}
+.current-weight-box .kg{font-size:54px;font-weight:950;line-height:1}
+.current-weight-box small{display:block;margin-top:7px;opacity:.55}
+.off-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.off-item{display:inline-flex;align-items:center;gap:8px;background:#211a15;border:1px solid #4b3828;border-radius:999px;padding:7px 9px 7px 12px;font-size:12px;font-weight:800}
+.off-item button{padding:4px 7px;margin:0;font-size:11px}
+.section-note{padding:10px 12px;border-radius:10px;background:#111218;border:1px solid #292a33;opacity:.78;font-size:13px;line-height:1.45}
+.training-count{color:#c48cff;font-weight:900}
+@media(max-width:800px){
+  .measure-stats{grid-template-columns:1fr 1fr}
+  .weight-panel{grid-template-columns:1fr}
+  .day-banner{align-items:flex-start;flex-direction:column}
+}
+@media(max-width:520px){.measure-stats{grid-template-columns:1fr}}

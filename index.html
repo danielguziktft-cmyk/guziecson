@@ -17,6 +17,11 @@
     <h1>Z Guziksona do <em>Guziecsona</em><br>w 90 DNI</h1>
     <p class="lead"><strong>Gram w TFT, a każda gra wpływa na trening.</strong> Miejsce zamienia się w powtórzenia, AVG daje konsekwencje, a przez 90 dni trackuję sylwetkę i cały progres.</p>
 
+    <div id="dayBanner" class="day-banner">
+      <strong id="dayBannerMain">—</strong>
+      <span id="dayBannerSub"></span>
+    </div>
+
     <div class="stats">
       <div class="stat"><b id="d">1</b><small>DZIEŃ / 90</small></div>
       <div class="stat"><b id="a">—</b><small>AVG DZISIAJ</small></div>
@@ -34,32 +39,17 @@
   <p class="how-subtitle">Jeśli jesteś tu pierwszy raz, wystarczą Ci te 4 zasady.</p>
 
   <div class="how-grid">
-    <div class="how-card">
-      <span class="icon">🎮</span>
-      <b>TFT → powtórzenia</b>
-      <p>Miejsce w każdej grze × mnożnik aktualnego ćwiczenia. Przykład: 5. miejsce ×4 = 20 pompek.</p>
-    </div>
-    <div class="how-card">
-      <span class="icon">🏋️</span>
-      <b>Robię je od razu</b>
-      <p>Powtórzenia wykonuję między grami. Główny trening nie ma limitu REP.</p>
-    </div>
-    <div class="how-card">
-      <span class="icon">🥣</span>
-      <b>AVG → następny stream</b>
-      <p>Dzisiejszy AVG decyduje o twarogu, który jem na początku kolejnego streama.</p>
-    </div>
-    <div class="how-card">
-      <span class="icon">🏃</span>
-      <b>AVG + donejty → bieg</b>
-      <p>Po ostatniej grze wyliczam dystans i biegnę pod koniec tego samego streama. Maksymalnie 3 km.</p>
-    </div>
+    <div class="how-card"><span class="icon">🎮</span><b>TFT → powtórzenia</b><p>Miejsce w każdej grze × mnożnik aktualnego ćwiczenia. Przykład: 5. miejsce ×4 = 20 pompek.</p></div>
+    <div class="how-card"><span class="icon">🏋️</span><b>Robię je od razu</b><p>Powtórzenia wykonuję między grami. Główny trening nie ma limitu REP.</p></div>
+    <div class="how-card"><span class="icon">🥣</span><b>AVG → następny stream</b><p>Dzisiejszy AVG decyduje o twarogu, który jem na początku kolejnego streama.</p></div>
+    <div class="how-card"><span class="icon">🏃</span><b>AVG + donejty → bieg</b><p>Po ostatniej grze wyliczam dystans i biegnę pod koniec tego samego streama. Maksymalnie 3 km.</p></div>
   </div>
 
   <div class="rule-strip">
     <span class="rule-chip">🟣 Punkty kanału → przysiady</span>
     <span class="rule-chip">MAX 100 przysiadów / stream</span>
     <span class="rule-chip">💸 2 zł donejtu = +100 m</span>
+    <span class="rule-chip">📅 Dni OFF nadal liczą się do 90 dni</span>
   </div>
 </section>
 
@@ -76,9 +66,7 @@
   <article id="trailerCard" class="card" style="display:none">
     <div class="eyebrow">TRAILER PROJEKTU</div>
     <h2>🎬 Zobacz trailer</h2>
-    <div class="trailer-wrap">
-      <iframe id="trailerFrame" title="Trailer projektu" allowfullscreen></iframe>
-    </div>
+    <div class="trailer-wrap"><iframe id="trailerFrame" title="Trailer projektu" allowfullscreen></iframe></div>
   </article>
 </section>
 
@@ -89,36 +77,26 @@
       <div class="when">NA POCZĄTKU NASTĘPNEGO STREAMA</div>
       <h3>🥣 Twaróg z dzisiejszego AVG</h3>
       <p>To, jaki twaróg jem jutro, jest ustalane przez AVG z dzisiejszego streama.</p>
-      <div class="food-legend">
-        <span>AVG ≤4.4 → sos WKDZIK</span>
-        <span>4.5–4.7 → neutral</span>
-        <span>4.8+ → kara</span>
-      </div>
+      <div class="food-legend"><span>AVG ≤4.4 → sos WKDZIK</span><span>4.5–4.7 → neutral</span><span>4.8+ → kara</span></div>
     </div>
 
     <div class="consequence-card">
       <div class="when">POD KONIEC DZISIEJSZEGO STREAMA</div>
       <h3>🏃 Bieg z AVG + donejtów</h3>
       <p>Dystans pokazuje się dopiero po ostatniej grze. Donejty dokładane są do dystansu z AVG.</p>
-      <div class="run-legend">
-        <span>≤4.2 → 0 m</span>
-        <span>4.3–4.4 → 300 m</span>
-        <span>4.5–4.6 → 600 m</span>
-        <span>4.7–4.8 → 900 m</span>
-        <span>4.9+ → 1200 m</span>
-        <span>MAX razem → 3 km</span>
-      </div>
+      <div class="run-legend"><span>≤4.2 → 0 m</span><span>4.3–4.4 → 300 m</span><span>4.5–4.6 → 600 m</span><span>4.7–4.8 → 900 m</span><span>4.9+ → 1200 m</span><span>MAX → 3 km</span></div>
     </div>
   </div>
 </section>
 
 <section class="grid">
   <div class="card">
-    <h2>🎮 Dzisiejszy trening</h2>
+    <h2 id="trainingTitle">🎮 Dzisiejszy trening</h2>
     <div class="big" id="ex"></div>
-    <p>Mnożnik: <b id="mul"></b>. Po każdej grze wykonuję wynikające z miejsca REP <b>od razu między grami</b>.</p>
-    <p class="muted">Limit 100 dotyczy wyłącznie przysiadów z punktów kanału — nie głównego ćwiczenia.</p>
+    <p>Mnożnik: <b id="mul"></b>. Rotacja idzie po <b>wykonanych streamach/treningach</b>, a nie po numerze dnia kalendarzowego.</p>
+    <p class="muted">Dzięki temu dzień OFF nie „zjada” żadnego ćwiczenia.</p>
   </div>
+
   <div class="card">
     <h2>🥣 Co jem dzisiaj?</h2>
     <div class="big" id="food">—</div>
@@ -137,18 +115,30 @@
 </section>
 
 <section class="card">
-  <h2>📏 Oficjalne pomiary sylwetki</h2>
-  <p>Pełne pomiary porównawcze wykonuję w czterech punktach projektu:</p>
-  <div class="measurement-days">
-    <span>DAY 1</span><span>DAY 30</span><span>DAY 60</span><span>DAY 90</span>
-  </div>
+  <h2>📏 Pomiary sylwetki</h2>
+  <p>
+    Wagę mogę aktualizować częściej. Pełne obwody robię tylko:
+    <b>DAY 1</b>, opcjonalnie <b>DAY 30</b> i na finał <b>DAY 90</b>.
+  </p>
+  <p class="muted">Nowy wpis samej wagi nie zeruje ani nie nadpisuje ostatniego pomiaru bicepsa, klatki, uda czy pasa.</p>
 
-  <div id="latestMeasurements" class="quad"></div>
+  <div class="measurement-days"><span>DAY 1</span><span>DAY 30 • opcjonalnie</span><span>DAY 90 • FINAŁ</span></div>
 
+  <div id="latestMeasurements" class="measure-stats"></div>
+
+  <h3>Oficjalne pomiary obwodów</h3>
   <div style="overflow:auto">
     <table class="table">
       <thead><tr><th>Dzień</th><th>Data</th><th>Waga</th><th>Biceps</th><th>Klatka</th><th>Udo</th><th>Pas</th></tr></thead>
       <tbody id="measurementHistory"></tbody>
+    </table>
+  </div>
+
+  <h3 style="margin-top:24px">Ostatnie ważenia</h3>
+  <div style="overflow:auto">
+    <table class="table">
+      <thead><tr><th>Dzień</th><th>Data</th><th>Waga</th></tr></thead>
+      <tbody id="weightHistory"></tbody>
     </table>
   </div>
 </section>
@@ -166,35 +156,73 @@
     <tbody id="hist"></tbody>
   </table>
 </section>
-
 </main>
 
 <script>
 function fmt(v){return v===null||v===undefined||v===""?"—":v}
 
+function latestMetric(ms,key){
+  for(const x of ms){
+    const v=x?.[key];
+    if(v!==null && v!==undefined && v!=="") return v;
+  }
+  return null;
+}
+
+function prettyDate(iso){
+  if(!iso)return "—";
+  const [y,m,d]=iso.split("-");
+  return `${d}.${m}.${y}`;
+}
+
 function render(){
   const st=G90.state,av=G90.avg(),e=G90.exercise();
+  const pd=G90.projectDay();
+  const status=G90.dayStatus();
+  const isOff=status.type==="off";
 
-  d.textContent=st.day;
-  a.textContent=av===null?"—":av.toFixed(2);
-  r.textContent=G90.reps();
+  d.textContent=pd;
+  a.textContent=(isOff && av===null)?"—":(av===null?"—":av.toFixed(2));
+  r.textContent=(isOff && !st.games.length)?"—":G90.reps();
   s.textContent=(st.squats||0)+"/100";
   w.textContent=st.weight||"—";
+
+  if(isOff){
+    dayBanner.classList.add("off");
+    dayBannerMain.textContent=`DAY ${pd}/90 • ${status.label}`;
+    const next=G90.nextStreamDate();
+    dayBannerSub.textContent=next ? `Dzień OFF jest częścią 90 dni. Stream wraca ${prettyDate(next)} o ${G90_CONFIG.streamTime}.` : "Dzień OFF jest częścią projektu.";
+    trainingTitle.textContent="⏭️ Kolejny trening po powrocie";
+  }else{
+    dayBanner.classList.remove("off");
+    dayBannerMain.textContent=`DAY ${pd}/90 • STREAM`;
+    dayBannerSub.textContent=`Trening #${st.trainingIndex||1} • start streama ${G90_CONFIG.streamTime}`;
+    trainingTitle.textContent="🎮 Dzisiejszy trening";
+  }
+
   ex.textContent=e.label+" — "+e.name;
   mul.textContent="×"+e.multiplier;
   food.textContent=st.yesterdayFood||"START PROJEKTU";
 
-  const ms=st.progress?.measurements||[];
-  const last=ms[0]||{};
-  latestMeasurements.innerHTML=
-    `<div class="stat"><b>${fmt(last.weight)}</b><small>WAGA KG</small></div>`+
-    `<div class="stat"><b>${fmt(last.biceps)}</b><small>BICEPS CM</small></div>`+
-    `<div class="stat"><b>${fmt(last.chest)}</b><small>KLATKA CM</small></div>`+
-    `<div class="stat"><b>${fmt(last.thigh)}</b><small>UDO CM</small></div>`;
+  const ms=(st.progress?.measurements||[]).filter(x =>
+    [x.biceps,x.chest,x.thigh,x.waist].some(v=>v!==null&&v!==undefined&&v!=="")
+  );
 
-  measurementHistory.innerHTML=ms.slice(0,20).map(x=>
+  latestMeasurements.innerHTML=
+    `<div class="stat"><b>${fmt(st.weight)}</b><small>AKTUALNA WAGA KG</small></div>`+
+    `<div class="stat"><b>${fmt(latestMetric(ms,"biceps"))}</b><small>OSTATNI BICEPS CM</small></div>`+
+    `<div class="stat"><b>${fmt(latestMetric(ms,"chest"))}</b><small>OSTATNIA KLATKA CM</small></div>`+
+    `<div class="stat"><b>${fmt(latestMetric(ms,"thigh"))}</b><small>OSTATNIE UDO CM</small></div>`+
+    `<div class="stat"><b>${fmt(latestMetric(ms,"waist"))}</b><small>OSTATNI PAS CM</small></div>`;
+
+  measurementHistory.innerHTML=ms.slice(0,12).map(x=>
     `<tr><td>${x.day}</td><td>${x.date}</td><td>${fmt(x.weight)}</td><td>${fmt(x.biceps)}</td><td>${fmt(x.chest)}</td><td>${fmt(x.thigh)}</td><td>${fmt(x.waist)}</td></tr>`
-  ).join("")||'<tr><td colspan="7">Brak pomiarów.</td></tr>';
+  ).join("")||'<tr><td colspan="7">Brak pełnych pomiarów.</td></tr>';
+
+  const wl=st.progress?.weightLog||[];
+  weightHistory.innerHTML=wl.slice(0,10).map(x=>
+    `<tr><td>${x.day}</td><td>${x.date}</td><td>${fmt(x.weight)} kg</td></tr>`
+  ).join("")||'<tr><td colspan="3">Brak zapisów wagi.</td></tr>';
 
   const photos=st.progress?.photos||[];
   gallery.innerHTML=photos.map(p=>
@@ -202,30 +230,28 @@ function render(){
   ).join("")||'<p>Brak zdjęć progresu.</p>';
 
   hist.innerHTML=(st.history||[]).slice(0,12).map(x=>
-    `<tr><td>${x.day}</td><td>${x.avg.toFixed(2)}</td><td>${x.exercise}</td><td>${x.reps}</td><td>${(x.runMeters/1000).toFixed(1)} km</td><td>${x.food}</td></tr>`
+    `<tr><td>${x.day}</td><td>${Number(x.avg).toFixed(2)}</td><td>${x.exercise}</td><td>${x.reps}</td><td>${(x.runMeters/1000).toFixed(1)} km</td><td>${x.food}</td></tr>`
   ).join("")||'<tr><td colspan="6">Projekt jeszcze nie wystartował.</td></tr>';
 }
 
 function youtubeEmbed(url){
-  if(!url) return "";
+  if(!url)return "";
   try{
     const u=new URL(url);
-    if(u.hostname.includes("youtu.be")) return "https://www.youtube.com/embed/"+u.pathname.replace("/","");
+    if(u.hostname.includes("youtu.be"))return "https://www.youtube.com/embed/"+u.pathname.replace("/","");
     if(u.hostname.includes("youtube.com")){
-      if(u.pathname.startsWith("/shorts/")) return "https://www.youtube.com/embed/"+u.pathname.split("/")[2];
+      if(u.pathname.startsWith("/shorts/"))return "https://www.youtube.com/embed/"+u.pathname.split("/")[2];
       const v=u.searchParams.get("v");
-      if(v) return "https://www.youtube.com/embed/"+v;
+      if(v)return "https://www.youtube.com/embed/"+v;
     }
   }catch(e){}
   return "";
 }
 
 function renderPromo(){
-  const promo=G90.state.promo||{};
-  const p=promo.pickem||{};
-  const now=Date.now();
-  const deadline=p.deadline?new Date(p.deadline).getTime():null;
-  const open=!!p.enabled && !!p.url && (!deadline || deadline>now);
+  const promo=G90.state.promo||{},p=promo.pickem||{};
+  const now=Date.now(),deadline=p.deadline?new Date(p.deadline).getTime():null;
+  const open=!!p.enabled&&!!p.url&&(!deadline||deadline>now);
 
   pickemCard.style.display=(p.enabled||p.url)?"block":"none";
   pickemTitle.textContent=(p.edition?p.edition+" — ":"")+(p.title||"PICK'EM");
@@ -248,20 +274,14 @@ function renderPromo(){
   if(deadline){
     const diff=deadline-now;
     if(diff>0){
-      const dd=Math.floor(diff/86400000);
-      const hh=Math.floor((diff%86400000)/3600000);
-      const mm=Math.floor((diff%3600000)/60000);
+      const dd=Math.floor(diff/86400000),hh=Math.floor((diff%86400000)/3600000),mm=Math.floor((diff%3600000)/60000);
       pickemCountdown.textContent=`Zamknięcie za: ${dd}d ${hh}h ${mm}min`;
-    }else{
-      pickemCountdown.textContent="Zgłoszenia zamknięte";
-    }
-  }else{
-    pickemCountdown.textContent="";
-  }
+    }else pickemCountdown.textContent="Zgłoszenia zamknięte";
+  }else pickemCountdown.textContent="";
 
   const embed=youtubeEmbed(promo.trailerUrl||"");
   trailerCard.style.display=embed?"block":"none";
-  if(embed && trailerFrame.src!==embed) trailerFrame.src=embed;
+  if(embed&&trailerFrame.src!==embed)trailerFrame.src=embed;
 }
 
 addEventListener("g90update",()=>{render();renderPromo();});

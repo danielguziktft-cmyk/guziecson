@@ -1,69 +1,165 @@
-<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Panel Guziecson</title><link rel="stylesheet" href="style.css"></head><body><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Panel Guziecson</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
 <script src="config.js"></script><script src="app.js"></script>
-<div id="loginView" class="wrap login"><section class="card"><h2>🔐 Panel Guziecson</h2><label>E-mail<input id="email" type="email"></label><label style="margin-top:12px">Hasło<input id="password" type="password"></label><button onclick="login()">ZALOGUJ</button><p id="loginStatus"></p></section></div>
+
+<div id="loginView" class="wrap login">
+  <section class="card">
+    <h2>🔐 Panel Guziecson</h2>
+    <label>E-mail<input id="email" type="email"></label>
+    <label style="margin-top:12px">Hasło<input id="password" type="password"></label>
+    <button onclick="login()">ZALOGUJ</button>
+    <p id="loginStatus"></p>
+  </section>
+</div>
+
 <main id="panelView" class="wrap" style="display:none">
-<h1>Panel <em>Guziecson 90</em></h1><p><span class="status-ok">● ZALOGOWANO</span> jako <b id="who"></b> <button class="secondary" onclick="firebase.auth().signOut()">WYLOGUJ</button></p>
-
-<section class="card"><h2>1. Gra skończona → kliknij miejsce</h2><p id="currentExercise"></p><div class="gamebuttons" id="gb"></div><p>Dzisiejsze REP: <span class="big" id="reps"></span></p><p>AVG: <b id="avg"></b> • Gry: <b id="games"></b></p><button class="secondary" onclick="G90.undoGame()">COFNIJ OSTATNIĄ GRĘ</button></section>
-
-<section class="grid"><div class="card"><h2>2. Przysiady</h2><p class="big" id="squats"></p><button onclick="G90.addSquats(10)">+10</button><button onclick="G90.addSquats(21)">+21</button><button onclick="G90.addSquats(54)">+54</button></div><div class="card"><h2>3. Donejty</h2><label>Łączna kwota dziś (PLN)<input id="don" type="number" step=".01" min="0"></label><button onclick="saveDonations()">ZAPISZ</button></div></section>
-
-<section class="card"><h2>4. Dane projektu</h2><div class="formgrid"><label>Dzień<input id="day" type="number" min="1" max="90"></label><label>Waga kg<input id="weight" type="number" step=".1"></label><label>Notatka<textarea id="notes"></textarea></label></div><button onclick="saveMeta()">ZAPISZ DANE</button></section>
-
-<section class="card"><h2>5. 📏 Nowy pomiar sylwetki</h2><p class="helper">Oficjalne pełne pomiary porównawcze: DAY 1 / DAY 30 / DAY 60 / DAY 90. Możesz oczywiście zapisywać dodatkowe pomiary częściej.</p>
-<div class="formgrid">
-<label>Waga (kg)<input id="mWeight" type="number" step=".1"></label>
-<label>Biceps (cm)<input id="mBiceps" type="number" step=".1"></label>
-<label>Klatka (cm)<input id="mChest" type="number" step=".1"></label>
-<label>Udo / noga (cm)<input id="mThigh" type="number" step=".1"></label>
-<label>Pas (cm)<input id="mWaist" type="number" step=".1"></label>
-<label>Data<input id="mDate" type="date"></label>
-</div>
-<button onclick="saveMeasurement()">ZAPISZ POMIARY</button>
-<p id="measurementStatus"></p>
-<div style="overflow:auto"><table class="table"><thead><tr><th>Dzień</th><th>Data</th><th>Waga</th><th>Biceps</th><th>Klatka</th><th>Udo</th><th>Pas</th><th></th></tr></thead><tbody id="measurementsAdmin"></tbody></table></div>
-</section>
-
-<section class="card"><h2>6. 📸 Zdjęcia progresu</h2>
-<div class="formgrid">
-<label>Ujęcie<select id="photoView"><option>Przód</option><option>Bok</option><option>Tył</option></select></label>
-<label>Zdjęcie<input id="photoFile" type="file" accept="image/*"></label>
-<label>Dzień<input id="photoDay" type="number" min="1" max="90"></label>
-</div>
-<button onclick="uploadPhoto()">WRZUĆ ZDJĘCIE</button>
-<p id="uploadStatus"></p>
-<p class="muted">Zdjęcie trafia do Firebase Storage, a link + dzień + ujęcie zapisują się w Realtime Database.</p>
-<div id="adminGallery" class="gallery"></div>
-</section>
-
+<h1>Panel <em>Guziecson 90</em></h1>
+<p><span class="status-ok">● ZALOGOWANO</span> jako <b id="who"></b> <button class="secondary" onclick="firebase.auth().signOut()">WYLOGUJ</button></p>
 
 <section class="card">
-  <h2 class="admin-section-title">🎯 Pick'Em + trailer</h2>
-  <p class="helper">Tu sterujesz aktualnie aktywnym Pick’Emem. #1 i #2 są około DAY 30 i DAY 60 z kreatyną WKDZIK. Finał DAY 90 obejmuje wszystkie pomiary i statystyki projektu, a główną nagrodą jest białko WKDZIK. Trailer jest ukryty, dopóki nie wpiszesz linku YouTube.</p>
+  <h2>1. Gra skończona → kliknij miejsce</h2>
+  <p id="currentExercise"></p>
+  <div class="gamebuttons" id="gb"></div>
+  <p>Dzisiejsze REP: <span class="big" id="reps"></span></p>
+  <p>AVG: <b id="avg"></b> • Gry: <b id="games"></b></p>
+  <button class="secondary" onclick="G90.undoGame()">COFNIJ OSTATNIĄ GRĘ</button>
+</section>
+
+<section class="grid">
+  <div class="card">
+    <h2>2. Przysiady</h2>
+    <p class="big" id="squats"></p>
+    <button onclick="G90.addSquats(10)">+10</button>
+    <button onclick="G90.addSquats(21)">+21</button>
+    <button onclick="G90.addSquats(54)">+54</button>
+  </div>
+  <div class="card">
+    <h2>3. Donejty</h2>
+    <label>Łączna kwota dziś (PLN)<input id="don" type="number" step=".01" min="0"></label>
+    <button onclick="saveDonations()">ZAPISZ</button>
+  </div>
+</section>
+
+<section class="card">
+  <h2>4. 📅 Status projektu i dni OFF</h2>
+
+  <div class="triple">
+    <div class="stat"><b id="projectDayDisplay">—</b><small>DAY / 90 — AUTOMATYCZNIE</small></div>
+    <div class="stat"><b id="todayStatus">—</b><small>STATUS DZISIAJ</small></div>
+    <div class="stat"><b id="trainingIndexDisplay">—</b><small>NUMER TRENINGU</small></div>
+  </div>
+
+  <p class="section-note">
+    DAY projektu liczy się automatycznie od <b>21.08.2026</b>. Dzień OFF nadal liczy się do 90 dni,
+    ale <b>nie przesuwa rotacji ćwiczeń</b>. Po wyjeździe wracasz więc do następnego niewykonanego treningu.
+  </p>
+
+  <label style="margin-top:14px">Notatka projektu<textarea id="notes"></textarea></label>
+  <button onclick="saveProjectMeta()">ZAPISZ NOTATKĘ</button>
+
+  <h3>Dodaj dzień OFF / wyjazd</h3>
+  <div class="formgrid">
+    <label>Data<input id="offDate" type="date"></label>
+    <label>Opis<input id="offLabel" type="text" placeholder="np. KAWALERSKIE"></label>
+  </div>
+  <button onclick="addOffDay()">DODAJ DZIEŃ OFF</button>
+  <div id="offList" class="off-list"></div>
+</section>
+
+<section class="card">
+  <h2>5. ⚖️ Waga — jedno miejsce do aktualizacji</h2>
+  <div class="weight-panel">
+    <div class="card current-weight-box" style="margin:0">
+      <div id="currentWeightBig" class="kg">—</div>
+      <small>AKTUALNA WAGA KG</small>
+    </div>
+    <div>
+      <div class="formgrid" style="grid-template-columns:1fr 1fr">
+        <label>Nowa waga (kg)<input id="weightQuick" type="number" step=".1" min="1"></label>
+        <label>Data<input id="weightDate" type="date"></label>
+      </div>
+      <button onclick="saveWeight()">ZAPISZ WAGĘ</button>
+      <p id="weightStatus"></p>
+      <p class="helper">To jest jedyne miejsce do wpisywania kilogramów. Zapis wagi NIE zmienia bicepsa, klatki, uda ani pasa.</p>
+    </div>
+  </div>
+
+  <div style="overflow:auto;margin-top:15px">
+    <table class="table">
+      <thead><tr><th>DAY</th><th>Data</th><th>Waga</th><th></th></tr></thead>
+      <tbody id="weightLogAdmin"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="card">
+  <h2>6. 📏 Pomiary sylwetki</h2>
+  <p class="helper">
+    Pełne obwody rób tylko wtedy, kiedy chcesz je faktycznie zmierzyć:
+    <b>DAY 1</b>, opcjonalnie <b>DAY 30</b> i finał <b>DAY 90</b>.
+    Waga zostanie automatycznie przypięta z aktualnej wagi — nie wpisujesz jej drugi raz.
+  </p>
 
   <div class="formgrid">
-    <label>Numer / edycja Pick'Emu
-      <input id="pEdition" type="text" placeholder="#1">
-    </label>
-    <label>Tytuł Pick'Emu
-      <input id="pTitle" type="text" placeholder="PICK'EM — Zgadnij wagę Guziecsona">
-    </label>
+    <label>Biceps (cm)<input id="mBiceps" type="number" step=".1"></label>
+    <label>Klatka (cm)<input id="mChest" type="number" step=".1"></label>
+    <label>Udo / noga (cm)<input id="mThigh" type="number" step=".1"></label>
+    <label>Pas (cm)<input id="mWaist" type="number" step=".1"></label>
+    <label>Data<input id="mDate" type="date"></label>
+  </div>
+
+  <button onclick="saveMeasurement()">ZAPISZ POMIARY</button>
+  <p id="measurementStatus"></p>
+
+  <div style="overflow:auto">
+    <table class="table">
+      <thead><tr><th>Dzień</th><th>Data</th><th>Waga tego dnia</th><th>Biceps</th><th>Klatka</th><th>Udo</th><th>Pas</th><th></th></tr></thead>
+      <tbody id="measurementsAdmin"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="card">
+  <h2>7. 📸 Zdjęcia progresu</h2>
+  <div class="formgrid">
+    <label>Ujęcie<select id="photoView"><option>Przód</option><option>Bok</option><option>Tył</option></select></label>
+    <label>Zdjęcie<input id="photoFile" type="file" accept="image/*"></label>
+    <label>Dzień<input id="photoDay" type="number" min="1" max="90"></label>
+  </div>
+  <button onclick="uploadPhoto()">WRZUĆ ZDJĘCIE</button>
+  <p id="uploadStatus"></p>
+  <p class="muted">Zdjęcie trafia do Firebase Storage, a link + dzień + ujęcie zapisują się w Realtime Database.</p>
+  <div id="adminGallery" class="gallery"></div>
+</section>
+
+<section class="card">
+  <h2 class="admin-section-title">8. 🎯 Pick'Em + trailer</h2>
+  <p class="helper">
+    #1 około DAY 30 i #2 około DAY 60 — kreatyna WKDZIK.
+    Finał DAY 90 — wszystkie końcowe pomiary + statystyki projektu, główna nagroda: <b>białko WKDZIK</b>.
+  </p>
+
+  <div class="formgrid">
+    <label>Numer / edycja Pick'Emu<input id="pEdition" type="text" placeholder="#1"></label>
+    <label>Tytuł Pick'Emu<input id="pTitle" type="text" placeholder="PICK'EM — Zgadnij wagę Guziecsona"></label>
     <label>Nagroda
       <input id="pPrize" type="text" placeholder="Wybrany smak kreatyny WKDZIK">
-      <span class="helper">#1/#2: kreatyna WKDZIK • finał: białko WKDZIK</span>
+      <span class="helper">#1/#2: kreatyna • finał: białko WKDZIK</span>
     </label>
-    <label>Link do Google Forms
-      <input id="pUrl" type="url" placeholder="https://docs.google.com/forms/...">
-    </label>
-    <label>Deadline
-      <input id="pDeadline" type="datetime-local">
-    </label>
-    <label>Link do trailera YouTube
-      <input id="trailerUrl" type="url" placeholder="https://youtu.be/...">
-    </label>
+    <label>Link do Google Forms<input id="pUrl" type="url" placeholder="https://docs.google.com/forms/..."></label>
+    <label>Deadline<input id="pDeadline" type="datetime-local"></label>
+    <label>Link do trailera YouTube<input id="trailerUrl" type="url" placeholder="https://youtu.be/..."></label>
   </div>
 
   <label style="margin-top:12px">Opis Pick'Emu
@@ -78,82 +174,240 @@
   <button onclick="savePromo()">ZAPISZ PICK'EM + TRAILER</button>
   <p id="promoStatus"></p>
 </section>
-<section class="card"><h2>8. Końcówka streama</h2><div id="summary" class="big">—</div><button onclick="finishPreview()">WYLICZ BIEG NA KONIEC STREAMA</button><button class="danger" onclick="if(confirm('Zapisać stream i przejść do kolejnego dnia?')) G90.nextDay()">ZAPISZ STREAM + NASTĘPNY DZIEŃ</button></section>
 
-<section class="card"><h2>⚠️ Reset</h2><button class="secondary" onclick="if(confirm('Zresetować dzisiejszy stream?')) G90.resetStream()">RESET DZISIEJSZEGO STREAMA</button><button class="danger" onclick="if(confirm('UWAGA: usunąć CAŁY progress projektu?')) G90.resetProject()">RESET CAŁEGO PROJEKTU</button></section>
+<section class="card">
+  <h2>9. Końcówka streama</h2>
+  <div id="summary" class="big">—</div>
+  <button onclick="finishPreview()">WYLICZ BIEG NA KONIEC STREAMA</button>
+  <button class="danger" onclick="finishStream()">ZAKOŃCZ STREAM + PRZEJDŹ DO NASTĘPNEGO TRENINGU</button>
+</section>
+
+<section class="card">
+  <h2>⚠️ Reset</h2>
+  <button class="secondary" onclick="if(confirm('Zresetować dzisiejszy stream?')) G90.resetStream()">RESET DZISIEJSZEGO STREAMA</button>
+  <button class="danger" onclick="if(confirm('UWAGA: usunąć CAŁY progress projektu?')) G90.resetProject()">RESET CAŁEGO PROJEKTU</button>
+</section>
 </main>
 
 <script>
 const storage = firebase.storage();
-for(let i=1;i<=8;i++){let b=document.createElement("button");b.textContent=i;b.onclick=()=>G90.addGame(i);gb.appendChild(b)}
-firebase.auth().onAuthStateChanged(user=>{loginView.style.display=user?"none":"block";panelView.style.display=user?"block":"none";if(user)who.textContent=user.email||user.uid;});
-async function login(){loginStatus.textContent="Logowanie...";try{await firebase.auth().signInWithEmailAndPassword(email.value,password.value);loginStatus.textContent="";}catch(e){loginStatus.className="status-bad";loginStatus.textContent="Błąd: "+e.message;}}
-function setIfNotEditing(el,value){if(document.activeElement!==el)el.value=value??"";}
-function fmt(v){return v===null||v===undefined||v===""?"—":v}
-function render(){
- let st=G90.state,e=G90.exercise(),av=G90.avg();
- currentExercise.innerHTML=`<b>${e.label} — ${e.name}</b> • mnożnik ×${e.multiplier}`;
- reps.textContent=G90.reps();avg.textContent=av===null?"—":av.toFixed(2);games.textContent=st.games.length;squats.textContent=(st.squats||0)+" / 100";
- setIfNotEditing(don,st.donationsPLN||0);setIfNotEditing(day,st.day);setIfNotEditing(weight,st.weight||"");setIfNotEditing(notes,st.notes||"");setIfNotEditing(photoDay,st.day);
- if(!mDate.value)mDate.value=new Date().toISOString().slice(0,10);
- const ms=st.progress?.measurements||[];
- measurementsAdmin.innerHTML=ms.map(x=>`<tr><td>${x.day}</td><td>${x.date}</td><td>${fmt(x.weight)}</td><td>${fmt(x.biceps)}</td><td>${fmt(x.chest)}</td><td>${fmt(x.thigh)}</td><td>${fmt(x.waist)}</td><td><button class="danger" onclick="G90.deleteMeasurement(${x.ts})">USUŃ</button></td></tr>`).join("")||'<tr><td colspan="8">Brak pomiarów.</td></tr>';
- const ps=st.progress?.photos||[];
- adminGallery.innerHTML=ps.map(p=>`<div class="photo"><img src="${p.url}"><div class="meta"><b>DAY ${p.day} • ${p.view}</b><span>${p.date}</span><button class="danger" onclick="deletePhoto(${p.ts}, '${p.path}')">USUŃ</button></div></div>`).join("")||'<p>Brak zdjęć.</p>';
 
- const promo=st.promo||{}, p=promo.pickem||{};
- setIfNotEditing(pEdition,p.edition||"#1");
- setIfNotEditing(pTitle,p.title||"");
- setIfNotEditing(pPrize,p.prize||"");
- setIfNotEditing(pUrl,p.url||"");
- setIfNotEditing(pDeadline,p.deadline||"");
- setIfNotEditing(trailerUrl,promo.trailerUrl||"");
- setIfNotEditing(pDescription,p.description||"");
- if(document.activeElement!==pEnabled) pEnabled.checked=!!p.enabled;
+for(let i=1;i<=8;i++){
+  let b=document.createElement("button");
+  b.textContent=i;
+  b.onclick=()=>G90.addGame(i);
+  gb.appendChild(b);
 }
-async function saveMeta(){G90.state.day=Number(day.value)||1;G90.state.weight=weight.value?Number(weight.value):null;G90.state.notes=notes.value;await G90.save();}
-async function saveDonations(){G90.state.donationsPLN=Number(don.value)||0;await G90.save();}
+
+firebase.auth().onAuthStateChanged(user=>{
+  loginView.style.display=user?"none":"block";
+  panelView.style.display=user?"block":"none";
+  if(user)who.textContent=user.email||user.uid;
+});
+
+async function login(){
+  loginStatus.textContent="Logowanie...";
+  try{
+    await firebase.auth().signInWithEmailAndPassword(email.value,password.value);
+    loginStatus.textContent="";
+  }catch(e){
+    loginStatus.className="status-bad";
+    loginStatus.textContent="Błąd: "+e.message;
+  }
+}
+
+function setIfNotEditing(el,value){
+  if(document.activeElement!==el)el.value=value??"";
+}
+function fmt(v){return v===null||v===undefined||v===""?"—":v}
+
+function prettyDate(iso){
+  if(!iso)return "—";
+  const [y,m,d]=iso.split("-");
+  return `${d}.${m}.${y}`;
+}
+
+function render(){
+  let st=G90.state,e=G90.exercise(),av=G90.avg();
+  const pd=G90.projectDay();
+  const status=G90.dayStatus();
+
+  currentExercise.innerHTML=`<b>${e.label} — ${e.name}</b> • mnożnik ×${e.multiplier} • <span class="training-count">trening #${st.trainingIndex||1}</span>`;
+  reps.textContent=G90.reps();
+  avg.textContent=av===null?"—":av.toFixed(2);
+  games.textContent=st.games.length;
+  squats.textContent=(st.squats||0)+" / 100";
+
+  setIfNotEditing(don,st.donationsPLN||0);
+  setIfNotEditing(notes,st.notes||"");
+  setIfNotEditing(photoDay,pd);
+
+  projectDayDisplay.textContent=pd+" / 90";
+  todayStatus.textContent=status.type==="off" ? status.label : "STREAM";
+  trainingIndexDisplay.textContent="#"+(st.trainingIndex||1);
+
+  if(!weightDate.value)weightDate.value=G90.localISODate();
+  if(!mDate.value)mDate.value=G90.localISODate();
+  if(!offDate.value)offDate.value=G90.localISODate();
+
+  currentWeightBig.textContent=st.weight ?? "—";
+
+  const wl=st.progress?.weightLog||[];
+  weightLogAdmin.innerHTML=wl.slice(0,20).map(x=>
+    `<tr><td>${x.day}</td><td>${x.date}</td><td>${fmt(x.weight)} kg</td><td><button class="danger" onclick="deleteWeight(${x.ts})">USUŃ</button></td></tr>`
+  ).join("")||'<tr><td colspan="4">Brak zapisów wagi.</td></tr>';
+
+  const ms=(st.progress?.measurements||[]).filter(x =>
+    [x.biceps,x.chest,x.thigh,x.waist].some(v=>v!==null&&v!==undefined&&v!=="")
+  );
+  measurementsAdmin.innerHTML=ms.map(x=>
+    `<tr><td>${x.day}</td><td>${x.date}</td><td>${fmt(x.weight)}</td><td>${fmt(x.biceps)}</td><td>${fmt(x.chest)}</td><td>${fmt(x.thigh)}</td><td>${fmt(x.waist)}</td><td><button class="danger" onclick="G90.deleteMeasurement(${x.ts})">USUŃ</button></td></tr>`
+  ).join("")||'<tr><td colspan="8">Brak pełnych pomiarów.</td></tr>';
+
+  const ps=st.progress?.photos||[];
+  adminGallery.innerHTML=ps.map(p=>
+    `<div class="photo"><img src="${p.url}"><div class="meta"><b>DAY ${p.day} • ${p.view}</b><span>${p.date}</span><button class="danger" onclick="deletePhoto(${p.ts}, '${p.path}')">USUŃ</button></div></div>`
+  ).join("")||'<p>Brak zdjęć.</p>';
+
+  const offs=st.schedule?.offDays||[];
+  offList.innerHTML=offs.map(x=>
+    `<span class="off-item">${prettyDate(x.date)} • ${x.label}<button class="danger" onclick="removeOffDay('${x.date}')">×</button></span>`
+  ).join("")||'<span class="muted">Brak zaplanowanych dni OFF.</span>';
+
+  const promo=st.promo||{}, p=promo.pickem||{};
+  setIfNotEditing(pEdition,p.edition||"#1");
+  setIfNotEditing(pTitle,p.title||"");
+  setIfNotEditing(pPrize,p.prize||"");
+  setIfNotEditing(pUrl,p.url||"");
+  setIfNotEditing(pDeadline,p.deadline||"");
+  setIfNotEditing(trailerUrl,promo.trailerUrl||"");
+  setIfNotEditing(pDescription,p.description||"");
+  if(document.activeElement!==pEnabled)pEnabled.checked=!!p.enabled;
+}
+
+async function saveProjectMeta(){
+  G90.state.notes=notes.value;
+  await G90.save();
+}
+
+async function saveDonations(){
+  G90.state.donationsPLN=Number(don.value)||0;
+  await G90.save();
+}
+
+async function addOffDay(){
+  if(!offDate.value)return;
+  await G90.addOffDay(offDate.value,offLabel.value||"OFF DAY");
+  offLabel.value="";
+}
+
+async function removeOffDay(date){
+  if(confirm("Usunąć ten dzień OFF?"))await G90.deleteOffDay(date);
+}
+
+async function saveWeight(){
+  const value=Number(weightQuick.value);
+  if(!value){
+    weightStatus.textContent="Wpisz wagę.";
+    return;
+  }
+  await G90.addWeight(value,weightDate.value||G90.localISODate());
+  weightQuick.value="";
+  weightStatus.textContent="Waga zapisana. Obwody pozostały bez zmian.";
+  setTimeout(()=>weightStatus.textContent="",3000);
+}
+
+async function deleteWeight(ts){
+  if(confirm("Usunąć ten zapis wagi?"))await G90.deleteWeight(ts);
+}
+
 async function saveMeasurement(){
- const m={day:Number(G90.state.day),date:mDate.value||new Date().toISOString().slice(0,10),weight:mWeight.value?Number(mWeight.value):null,biceps:mBiceps.value?Number(mBiceps.value):null,chest:mChest.value?Number(mChest.value):null,thigh:mThigh.value?Number(mThigh.value):null,waist:mWaist.value?Number(mWaist.value):null,ts:Date.now()};
- await G90.addMeasurement(m);
- if(m.weight!==null){G90.state.weight=m.weight;await G90.save();}
- measurementStatus.textContent="Pomiary zapisane.";
+  const vals=[mBiceps.value,mChest.value,mThigh.value,mWaist.value];
+  if(!vals.some(v=>v!=="")){
+    measurementStatus.textContent="Wpisz przynajmniej jeden obwód.";
+    return;
+  }
+
+  const date=mDate.value||G90.localISODate();
+  const m={
+    day:G90.projectDay(date),
+    date,
+    weight:G90.state.weight??null,
+    biceps:mBiceps.value?Number(mBiceps.value):null,
+    chest:mChest.value?Number(mChest.value):null,
+    thigh:mThigh.value?Number(mThigh.value):null,
+    waist:mWaist.value?Number(mWaist.value):null,
+    ts:Date.now()
+  };
+
+  await G90.addMeasurement(m);
+  mBiceps.value=mChest.value=mThigh.value=mWaist.value="";
+  measurementStatus.textContent="Pomiary zapisane. Waga została przypięta automatycznie.";
+  setTimeout(()=>measurementStatus.textContent="",3000);
 }
+
 async function uploadPhoto(){
- const file=photoFile.files[0]; if(!file){uploadStatus.textContent="Wybierz zdjęcie.";return;}
- if(file.size>8*1024*1024){uploadStatus.textContent="Zdjęcie jest za duże. Max 8 MB.";return;}
- uploadStatus.textContent="Wysyłanie...";
- try{
-  const ts=Date.now(), ext=(file.name.split('.').pop()||'jpg').replace(/[^a-zA-Z0-9]/g,'');
-  const path=`progress/day-${Number(photoDay.value)||G90.state.day}/${ts}-${photoView.value}.${ext}`;
-  const ref=storage.ref(path);
-  await ref.put(file,{contentType:file.type});
-  const url=await ref.getDownloadURL();
-  await G90.addPhoto({day:Number(photoDay.value)||G90.state.day,date:new Date().toISOString().slice(0,10),view:photoView.value,url,path,ts});
-  photoFile.value="";uploadStatus.textContent="Zdjęcie wrzucone.";
- }catch(e){uploadStatus.className="status-bad";uploadStatus.textContent="Błąd uploadu: "+e.message;}
+  const file=photoFile.files[0];
+  if(!file){uploadStatus.textContent="Wybierz zdjęcie.";return;}
+  if(file.size>8*1024*1024){uploadStatus.textContent="Zdjęcie jest za duże. Max 8 MB.";return;}
+
+  uploadStatus.textContent="Wysyłanie...";
+  try{
+    const ts=Date.now(), ext=(file.name.split('.').pop()||'jpg').replace(/[^a-zA-Z0-9]/g,'');
+    const day=Number(photoDay.value)||G90.projectDay();
+    const path=`progress/day-${day}/${ts}-${photoView.value}.${ext}`;
+    const ref=storage.ref(path);
+    await ref.put(file,{contentType:file.type});
+    const url=await ref.getDownloadURL();
+    await G90.addPhoto({day,date:G90.localISODate(),view:photoView.value,url,path,ts});
+    photoFile.value="";
+    uploadStatus.textContent="Zdjęcie wrzucone.";
+  }catch(e){
+    uploadStatus.className="status-bad";
+    uploadStatus.textContent="Błąd uploadu: "+e.message;
+  }
 }
+
 async function deletePhoto(ts,path){
- if(!confirm("Usunąć to zdjęcie?"))return;
- try{if(path)await storage.ref(path).delete();}catch(e){console.warn(e)}
- await G90.deletePhoto(ts);
+  if(!confirm("Usunąć to zdjęcie?"))return;
+  try{if(path)await storage.ref(path).delete();}catch(e){console.warn(e)}
+  await G90.deletePhoto(ts);
 }
+
 async function savePromo(){
   G90.state.promo = G90.state.promo || {};
   G90.state.promo.trailerUrl = trailerUrl.value.trim();
   G90.state.promo.pickem = {
-    enabled: pEnabled.checked,
-    edition: pEdition.value.trim() || "#1",
-    title: pTitle.value.trim() || "PICK'EM — Zgadnij wagę Guziecsona",
-    description: pDescription.value.trim(),
-    url: pUrl.value.trim(),
-    deadline: pDeadline.value,
-    prize: pPrize.value.trim() || "Wybrany smak kreatyny WKDZIK"
+    enabled:pEnabled.checked,
+    edition:pEdition.value.trim()||"#1",
+    title:pTitle.value.trim()||"PICK'EM — Zgadnij wagę Guziecsona",
+    description:pDescription.value.trim(),
+    url:pUrl.value.trim(),
+    deadline:pDeadline.value,
+    prize:pPrize.value.trim()||"Wybrany smak kreatyny WKDZIK"
   };
   await G90.save();
   promoStatus.textContent="Zapisano. Strona zaktualizowała się live.";
   setTimeout(()=>promoStatus.textContent="",2500);
 }
-function finishPreview(){let av=G90.avg();summary.innerHTML=av===null?"Brak gier.":`AVG ${av.toFixed(2)} → ${G90.foodFor(av)} jutro • BIEG: ${(G90.finalRun()/1000).toFixed(1)} KM`;}
+
+function finishPreview(){
+  let av=G90.avg();
+  summary.innerHTML=av===null
+    ?"Brak gier."
+    :`AVG ${av.toFixed(2)} → ${G90.foodFor(av)} na następny stream • BIEG: ${(G90.finalRun()/1000).toFixed(1)} KM`;
+}
+
+async function finishStream(){
+  if(!G90.state.games.length){
+    alert("Nie ma żadnych gier do zapisania.");
+    return;
+  }
+  if(!confirm("Zapisać stream? Rotacja przejdzie do następnego TRENINGU, ale DAY projektu nadal będzie liczony automatycznie z kalendarza."))return;
+  await G90.nextDay();
+}
+
 addEventListener("g90update",render);
-</script></body></html>
+</script>
+</body>
+</html>

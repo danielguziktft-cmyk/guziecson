@@ -2,6 +2,8 @@
 window.G90_CONFIG = {
   projectName: "Z Guziksona do Guziecsona w 90 DNI",
   maxDays: 90,
+  projectStartDate: "2026-08-21",
+  streamTime: "10:00",
   squatCap: 100,
   donationMetersPer2PLN: 100,
   runCapMeters: 3000,

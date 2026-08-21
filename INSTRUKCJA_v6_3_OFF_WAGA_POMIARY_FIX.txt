@@ -1,0 +1,77 @@
+GUZIECSON 90 — v6.3
+OFF DAYS + JEDNA WAGA + POMIARY BEZ ZEROWANIA
+
+1. DAY PROJEKTU JEST AUTOMATYCZNY
+Start: 21.08.2026.
+Nie wpisujesz już ręcznie DAY w panelu.
+Strona sama wylicza DAY 1–90 z kalendarza.
+
+2. ROTACJA TRENINGU JEST ODDZIELONA OD DAY
+Dni OFF nadal liczą się do 90 dni.
+Nie przesuwają jednak ćwiczeń.
+
+Przykład:
+ostatni trening przed wyjazdem = PULL 1
+3 dni OFF
+pierwszy stream po powrocie = PUSH 2
+
+3. KAWALERSKIE JEST JUŻ WPISANE
+Domyślnie:
+28.08.2026 — KAWALERSKIE
+29.08.2026 — KAWALERSKIE
+30.08.2026 — KAWALERSKIE
+
+Na te dni strona pokaże status OFF/KAWALERSKIE i informację,
+że kolejny stream wraca 31.08 o 10:00.
+
+W panelu można dowolnie dodawać i usuwać dni OFF.
+
+4. WAGA — TYLKO JEDNO POLE
+Usunięte zostało dublowanie wagi z "Danych projektu" i "Pomiarów".
+Teraz jest jedna osobna sekcja:
+⚖️ WAGA — JEDNO MIEJSCE DO AKTUALIZACJI
+
+Każde zapisanie:
+- zmienia aktualną wagę,
+- zapisuje ją w historii wagi,
+- NIE zmienia obwodów.
+
+5. POMIARY CIAŁA SĄ ODDZIELONE
+W sekcji pomiarów wpisujesz tylko:
+- biceps
+- klatkę
+- udo
+- pas
+
+Aktualna waga z tego dnia przypina się automatycznie do pełnego pomiaru.
+
+Plan:
+DAY 1 — pełny pomiar
+DAY 30 — opcjonalny pełny pomiar
+DAY 90 — finałowy pełny pomiar
+
+DAY 60 może mieć tylko ważenie do Pick'Emu.
+
+6. NAPRAWIONE ZEROWANIE NA STRONIE
+Jeśli:
+- DAY 1 wpiszesz biceps/klatkę/udo/pas,
+- później zmienisz tylko wagę,
+
+strona nadal pokazuje ostatnie prawdziwe obwody.
+Nie pojawiają się zera / puste wartości od nowego wpisu wagi.
+
+7. STARE DANE
+Stare pomiary pozostają kompatybilne.
+Na publicznej stronie tabela "Oficjalne pomiary obwodów"
+ignoruje stare wpisy, które miały tylko wagę i puste obwody.
+
+8. GITHUB
+Podmień całą zawartość repo plikami z tej paczki.
+Firebase rules i Storage rules nie wymagają zmian.
+
+Po deployu:
+- Ctrl+Shift+R
+- odśwież Browser Source w OBS
+- sprawdź control.html
+- sekcja statusu powinna pokazać automatyczny DAY
+- w dniach 28–30.08 strona pokaże KAWALERSKIE

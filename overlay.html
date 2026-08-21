@@ -10,7 +10,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script src="config.js"></script><script src="app.js"></script>
 <div class="overlay">
-  <div class="top">Z GUZIKSONA DO GUZIECSONA • <span id="d"></span>/90</div>
+  <div class="top">Z GUZIKSONA DO GUZIECSONA • DAY <span id="d"></span>/90 <span id="offMark"></span></div>
   <div class="line"><span id="ex"></span><span id="mul"></span></div>
   <div class="line"><span>AVG <b id="a"></b></span><span>PRZYSIADY <b id="s"></b>/100</span></div>
   <div class="rep"><span id="r"></span> REP</div>
@@ -25,7 +25,8 @@
 <script>
 function render(){
   const av=G90.avg(),e=G90.exercise(),lg=G90.state.lastGame;
-  d.textContent=G90.state.day;
+  d.textContent=G90.projectDay();
+  const ds=G90.dayStatus(); offMark.textContent=ds.type==="off"?" • "+ds.label:"";
   ex.textContent=e.name;
   mul.textContent="×"+e.multiplier;
   a.textContent=av===null?"—":av.toFixed(2);
